@@ -10,23 +10,28 @@ public class PickupManager : MonoBehaviour
     [SerializeField] Material speedPowerupMaterial;
     [SerializeField] Material jumpPowerupMaterial;
 
-
     [SerializeField] int amountOfHealth = 20;
     Health playerHealth;
 
     [SerializeField] float speedMultilpier = 2f;
-    [SerializeField] float speedPowerupTimeLeft;
+    [SerializeField] float speedTimeLeft = 0;
     float speedPowerupTime = 5;
 
     [SerializeField] float jumpMultilpier = 1.5f;
-    [SerializeField] float jumpPowerupTimeLeft;
+    [SerializeField] float jumpTimeLeft = 0;
     float jumpPowerupTime = 5;
 
-    PlayerController playerController;
+    RoverController playerController;
+    PickupGenerator pickupGenerator;
+    GameObject roverBody;
 
     private void Start()
     {
-        defaultMaterial = GetComponent<Renderer>().material;
+        roverBody = GameObject.Find("RoverBody");
+
+        defaultMaterial = roverBody.GetComponent<Renderer>().material;
+
+        pickupGenerator = FindObjectOfType<PickupGenerator>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -39,20 +44,17 @@ public class PickupManager : MonoBehaviour
             {
                 case Pickup.PickupType.HealthPickup:
                     {
-                        Debug.Log("HealthPickup");
                         HealthPickup();
                     }
                     break;
                 case Pickup.PickupType.SpeedPickup:
                     {
-                        Debug.Log("SpeedPickup");
                         SpeedPickup();
                         
                     }
                     break;
                 case Pickup.PickupType.JumpPickup:
                     {
-                        Debug.Log("JumpPickup");
                         JumpPickup();
                         
                     }
@@ -80,15 +82,27 @@ public class PickupManager : MonoBehaviour
     // SPEED POWERUP
     private void SpeedPickup()
     {
-        speedPowerupTimeLeft = speedPowerupTime;
+        if (!JumpPickupActive())
+        {
+            pickupGenerator.ChangeSpeedChance(-1);
+            if (SpeedPickupActive())
+            {
+                speedTimeLeft += speedPowerupTime;
+                return;  
+            }
 
-        playerController = GetComponent<PlayerController>();
+            speedTimeLeft += speedPowerupTime;
+            playerController = GetComponent<RoverController>();
 
-        float newSpeed = playerController.DefaultMovementSpeed * speedMultilpier;
-        playerController.SetCurrentSpeed(newSpeed);
-        gameObject.GetComponent<Renderer>().material = speedPowerupMaterial;
+            float newSpeed = playerController.DefaultMovementSpeed * speedMultilpier;
+            playerController.SetCurrentSpeed(newSpeed);
+            roverBody.GetComponent<Renderer>().material = speedPowerupMaterial;
 
-        StartCoroutine(ReduceSpeedTimer());
+            StartCoroutine(ReduceSpeedTimer());
+           
+           
+        }
+        
     }
 
     
@@ -96,9 +110,9 @@ public class PickupManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        if (!IsSpeedPickupActive())
+        if (SpeedPickupActive())
         {
-            speedPowerupTimeLeft = speedPowerupTimeLeft - 1;
+            speedTimeLeft = speedTimeLeft - 1;
             StartCoroutine(ReduceSpeedTimer());
         }
         else
@@ -107,47 +121,52 @@ public class PickupManager : MonoBehaviour
         }
     }
 
-    public bool IsSpeedPickupActive()
+    public bool SpeedPickupActive()
     {
-        return speedPowerupTimeLeft <= 0;
+        return speedTimeLeft > 0.0f;
     }
 
 
     private void StopSpeedPowerup()
     {
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<RoverController>();
 
         playerController.SetCurrentSpeed(playerController.DefaultMovementSpeed);
 
-        gameObject.GetComponent<Renderer>().material = defaultMaterial;
+        roverBody.GetComponent<Renderer>().material = defaultMaterial;
     }
 
     // JUMP POWERUP
     private void JumpPickup()
     {
-        jumpPowerupTimeLeft = jumpPowerupTime;
+        if (!SpeedPickupActive())
+        {
+            pickupGenerator.ChangeSpeedChance(1);
+            if (JumpPickupActive())
+            {
+                jumpTimeLeft += jumpPowerupTime;
+                return;      
+            }
 
-        playerController = GetComponent<PlayerController>();
+            jumpTimeLeft += jumpPowerupTime;
+            playerController = GetComponent<RoverController>();
 
-        float newJumpPower = playerController.DefaultJumpPower * jumpMultilpier;
-        playerController.SetCurrentJumpPower(newJumpPower);
+            float newJumpPower = playerController.DefaultJumpPower * jumpMultilpier;
+            playerController.SetCurrentJumpPower(newJumpPower);
 
-        gameObject.GetComponent<Renderer>().material = jumpPowerupMaterial;
+            roverBody.GetComponent<Renderer>().material = jumpPowerupMaterial;
 
-        StartCoroutine(ReduceJumpTimer());
+            StartCoroutine(ReduceJumpTimer());  
+        }
     }
-
-
-    
-
 
     IEnumerator ReduceJumpTimer()
     {
         yield return new WaitForSeconds(1f);
 
-        if (!IsJumpPickupActive())
+        if (JumpPickupActive())
         {
-            jumpPowerupTimeLeft = jumpPowerupTimeLeft - 1;
+            jumpTimeLeft = jumpTimeLeft - 1;
             StartCoroutine(ReduceJumpTimer());
         }
         else
@@ -157,17 +176,17 @@ public class PickupManager : MonoBehaviour
 
 
     }
-    public bool IsJumpPickupActive()
+    public bool JumpPickupActive()
     {
-        return jumpPowerupTimeLeft <= 0;
+        return jumpTimeLeft > 0.0f;
     }
 
     private void StopJumpPowerup()
     {
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<RoverController>();
 
         playerController.SetCurrentJumpPower(playerController.DefaultJumpPower);
 
-        gameObject.GetComponent<Renderer>().material = defaultMaterial;
+        roverBody.GetComponent<Renderer>().material = defaultMaterial;
     }
 }

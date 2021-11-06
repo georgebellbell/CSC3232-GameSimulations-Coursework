@@ -7,7 +7,7 @@ public class GravityBody : MonoBehaviour
 {
     //public GravityAttractor[] planets;
     //public int currentPlanet = 0;
-    [SerializeField] GravityAttractor currentAttractor;
+    [SerializeField] Planet currentPlanet;
     private Transform myTransform;
 
     public float objectMass = 10;
@@ -21,45 +21,25 @@ public class GravityBody : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        /*
-        if (Input.GetKeyDown(KeyCode.T) && gameObject.tag == "Player")
-        {
-            gameObject.GetComponent<PlayerController>().enabled = false;
-            if (currentPlanet == planets.Length - 1)
-            {
-                currentPlanet = 0;
-            }
-            else
-            {
-                currentPlanet++;
-            }
-        }
-        */
-    }
+
     void FixedUpdate()
     {
-        /*
-        if (gameObject.tag == "Player")
-            currentAttractor = planets[currentPlanet];
-            */
-        currentAttractor.Attract(myTransform, objectMass);
+        currentPlanet.Attract(myTransform, objectMass);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Planet") && gameObject.tag == "Player")
         {
-            PlayerController playerController = gameObject.GetComponent<PlayerController>();
+            RoverController playerController = gameObject.GetComponent<RoverController>();
             if(playerController.enabled == false)
             {
                 playerController.enabled = true;
             }
         }
     }
-    public void SetCurrentAttractor(GravityAttractor newGravityAttractor)
+    public void SetCurrentAttractor(Planet newGravityAttractor)
     {
-        currentAttractor = newGravityAttractor;
+        currentPlanet = newGravityAttractor;
     }
 }

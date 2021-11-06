@@ -6,10 +6,9 @@ public class ManagementSystem : MonoBehaviour
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
 
-    Scene currentScene;
+    [SerializeField] int currentScene;
 
     bool gameIsPaused;
-    bool gameEnded;
 
     void Start()
     {
@@ -18,7 +17,7 @@ public class ManagementSystem : MonoBehaviour
         winMenu.SetActive(false);
         loseMenu.SetActive(false);
 
-        currentScene = SceneManager.GetActiveScene();
+        currentScene = SceneManager.GetActiveScene().buildIndex;
     }
 
     public void TogglePause()
@@ -38,21 +37,16 @@ public class ManagementSystem : MonoBehaviour
     public void WinGame()
     {
         winMenu.SetActive(true);
-        FinishGame();
+        Time.timeScale = 0;
+        
     }
 
     public void LoseGame()
     {
         loseMenu.SetActive(true);
-        FinishGame();
-    }
-
-    private void FinishGame()
-    {
         Time.timeScale = 0;
-        gameEnded = true;
+        
     }
-
 
     private void PauseGame()
     {
@@ -68,17 +62,18 @@ public class ManagementSystem : MonoBehaviour
 
     public void RestartLevel()
     {
-        SceneManager.LoadScene(currentScene.buildIndex);
+        SceneManager.LoadScene(currentScene);
     }
 
     public void LoadNextLevel()
     {
-        // TO BE IMPLEMENTED
+        int nextScene = (currentScene + 1) % SceneManager.sceneCountInBuildSettings;
+        SceneManager.LoadScene(nextScene);
     }
 
     public void ReturnToMainMenu()
     {
-        Debug.Log("Returning to Main Menu");
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGame()

@@ -16,12 +16,13 @@ public class MeteorGenerator : MonoBehaviour
 
     IEnumerator SpawnMeteor()
     {
+        // change to transform.scale
         Vector3 pos = Random.onUnitSphere * GetComponentInChildren<SphereCollider>().radius * distanceFromPlanet;
         
         GameObject newMeteor = Instantiate(meteorPrefab);
 
         newMeteor.transform.position = pos;
-        newMeteor.GetComponent<GravityBody>().SetCurrentAttractor(gameObject.GetComponent<GravityAttractor>());
+        newMeteor.GetComponent<GravityBody>().SetCurrentAttractor(gameObject.GetComponent<Planet>());
 
         newMeteor.transform.parent = meteorParent.transform;
 
@@ -29,4 +30,6 @@ public class MeteorGenerator : MonoBehaviour
 
         StartCoroutine(SpawnMeteor());
     }
+
+   
 }
