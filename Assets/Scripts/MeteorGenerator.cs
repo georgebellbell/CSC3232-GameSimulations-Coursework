@@ -1,30 +1,28 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MeteorGenerator : MonoBehaviour
 {
-    public GameObject meteorPrefab;
-    GameObject meteorParent;
-    [SerializeField] float distanceFromPlanet = 5;
     [SerializeField] float spawnRate = 0.5f;
+    [SerializeField] GameObject meteorPrefab;
+
+    GameObject meteorParent;
+    
+    // When game starts, SpawnMeteor Coroutine will start
     void Start()
     {
         meteorParent = GameObject.Find("MeteorParent");
         StartCoroutine(SpawnMeteor());
     }
 
+    //  Instantiates meteor object in orbit around planet and has an attractor set to it so that it falls to the planet
     IEnumerator SpawnMeteor()
     {
-        // change to transform.scale
-        Vector3 pos = Random.onUnitSphere * GetComponentInChildren<SphereCollider>().radius * distanceFromPlanet;
-        
-        GameObject newMeteor = Instantiate(meteorPrefab);
+        float radius = GetComponentInChildren<SphereCollider>().radius * transform.GetChild(0).transform.lossyScale.x;
+        Vector3 pos = UnityEngine.Random.onUnitSphere * radius * 3;
 
-        newMeteor.transform.position = pos;
+        GameObject newMeteor = Instantiate(meteorPrefab, pos, Quaternion.identity, meteorParent.transform);
         newMeteor.GetComponent<GravityBody>().SetCurrentAttractor(gameObject.GetComponent<Planet>());
-
-        newMeteor.transform.parent = meteorParent.transform;
 
         yield return new WaitForSeconds(spawnRate);
 

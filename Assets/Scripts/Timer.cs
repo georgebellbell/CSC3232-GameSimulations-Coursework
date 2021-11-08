@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class Timer : MonoBehaviour
@@ -10,68 +8,51 @@ public class Timer : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
 
     ManagementSystem managementSystem;
-
     PickupGenerator pickupGenerator;
-
     Planet.PlanetType planetType;
     // Start is called before the first frame update
     void Start()
     {
         managementSystem = FindObjectOfType<ManagementSystem>();
-        pickupGenerator = GetComponent<PickupGenerator>();
         planetType = GetComponent<Planet>().thisPlanetType;
+        pickupGenerator = GetComponent<PickupGenerator>();
 
-        if (planetType == Planet.PlanetType.puzzle)
-        {
-            StartCoroutine(PuzzleCountdown());
-        }
-        else if (planetType == Planet.PlanetType.survival)
-        {
-            StartCoroutine(SurvivalCountdown());
-        }
-        
+        StartCoroutine(Countdown());
     }
 
-    IEnumerator PuzzleCountdown()
+    // Called at start of game and by itself if timer has not run 
+    IEnumerator Countdown()
     {
-        timerText.text = "Time left: " + timeToComplete;
+        // As time progresses, the chance of a certain pickup spawining increases
+        pickupGenerator.ChangeHealthChance(0.2);
+        pickupGenerator.ChangeJumpChance(0.15);
+        pickupGenerator.ChangeSpeedChance(0.1);
 
         yield return new WaitForSeconds(1f);
 
         timeToComplete -= 1;
 
-        if (timeToComplete < 0)
-        { 
-            StartCoroutine(LoseGame());     
-        }
-        else
-        {
-            StartCoroutine(PuzzleCountdown());
-        }
-    }
-
-    IEnumerator SurvivalCountdown()
-    {
         timerText.text = "Time left: " + timeToComplete;
 
-        yield return new WaitForSeconds(1f);
-
-        pickupGenerator.ChangeJumpChance(0.1);
-        pickupGenerator.ChangeSpeedChance(0.05);
-
-        timeToComplete -= 1;
-
-        if (timeToComplete < 0)
+        // Depending on planet state, game will enter a win or lose state when timer runs out
+        if (timeToComplete <= 0)
         {
-            managementSystem.WinGame();
+            if (planetType == Planet.PlanetType.puzzle)
+            {
+                StartCoroutine(LoseGame());
+            }
+            else if (planetType == Planet.PlanetType.survival)
+            {
+                managementSystem.WinGame();
+            }         
         }
         else
         {
-            StartCoroutine(SurvivalCountdown());
+            StartCoroutine(Countdown());
         }
     }
 
-
+    // Death state is a coroutine that will be developed in part 2
     IEnumerator LoseGame()
     {
         // death animation

@@ -1,17 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RoverPart : MonoBehaviour
 {
+    [SerializeField] Color damagedColor = Color.red;
+    Color originalColor;
+
     GameObject parent;
     PickupManager pickupManager;
     public RoverParts thisPart;
-
-    Color originalColor;
-    [SerializeField] Color damagedColor = Color.red;
-
+    
     void Start()
     {
         pickupManager = GetComponentInParent<PickupManager>();
@@ -19,13 +16,12 @@ public class RoverPart : MonoBehaviour
         originalColor = GetComponent<Renderer>().material.color;
     }
 
+    // If player hits a crater, the specific part that did will highlight red and damage done will be passed to Health.CS
     void OnTriggerEnter(Collider collision)
     {
-        
-        
         if (collision.gameObject.CompareTag("Crater"))
         {
-            if (!pickupManager.SpeedPickupActive())
+            if (!pickupManager.PickupActive(pickupManager.speedTimeLeft))
             {
 
                 GetComponent<Renderer>().material.color = damagedColor;
@@ -34,20 +30,24 @@ public class RoverPart : MonoBehaviour
         }
     }
 
+    // If meteor hits player, the specific part that did will highlight red and damage done will be passed to Health.CS
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Meteor"))
         {
-            if (!pickupManager.SpeedPickupActive())
+            if (!pickupManager.PickupActive(pickupManager.speedTimeLeft))
             {
                 GetComponent<Renderer>().material.color = damagedColor;
                 parent.GetComponent<Health>().OnChildCollisionEnter(thisPart, 40f);
             }
         }
     }
+
+    // when exiting collision with either of these, if player is not in a speed pickup state, they item will return to normal
+
     private void OnCollisionExit(Collision collision)
     {
-        if (!pickupManager.SpeedPickupActive() && collision.gameObject.CompareTag("Meteor") || thisPart == RoverParts.Wheel)
+        if (!(pickupManager.PickupActive(pickupManager.speedTimeLeft) || thisPart == RoverParts.Wheel) && collision.gameObject.CompareTag("Meteor") )
         {
             GetComponent<Renderer>().material.color = originalColor;
         }
@@ -55,7 +55,7 @@ public class RoverPart : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!pickupManager.SpeedPickupActive() && other.gameObject.CompareTag("Crater") || thisPart == RoverParts.Wheel)
+        if ((!pickupManager.PickupActive(pickupManager.speedTimeLeft) || thisPart == RoverParts.Wheel) && other.gameObject.CompareTag("Crater"))
         {
             GetComponent<Renderer>().material.color = originalColor;
         }

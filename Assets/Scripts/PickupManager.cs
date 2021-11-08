@@ -5,21 +5,32 @@ using UnityEngine;
 
 public class PickupManager : MonoBehaviour
 {
+    public class PickupTimeleft
+    {
+        public Pickup.PickupType pickup;
+        public float timeLeft;
 
+        public PickupTimeleft(Pickup.PickupType pickupType)
+        {
+            pickup = pickupType;
+            timeLeft = 0;
+        }
+    }
     [SerializeField] Material defaultMaterial;
     [SerializeField] Material speedPowerupMaterial;
     [SerializeField] Material jumpPowerupMaterial;
 
-    [SerializeField] int amountOfHealth = 20;
+    [SerializeField] int healthIncrease = 20;
     Health playerHealth;
 
     [SerializeField] float speedMultilpier = 2f;
-    [SerializeField] float speedTimeLeft = 0;
-    float speedPowerupTime = 5;
+    [SerializeField]float speedPowerupTime = 3;
+    public PickupTimeleft speedTimeLeft = new PickupTimeleft(Pickup.PickupType.SpeedPickup);
+    //float speedTimeLeft = 0;
 
     [SerializeField] float jumpMultilpier = 1.5f;
-    [SerializeField] float jumpTimeLeft = 0;
-    float jumpPowerupTime = 5;
+    [SerializeField] float jumpPowerupTime = 5;
+    public PickupTimeleft jumpTimeLeft = new PickupTimeleft(Pickup.PickupType.SpeedPickup);
 
     RoverController playerController;
     PickupGenerator pickupGenerator;
@@ -34,6 +45,7 @@ public class PickupManager : MonoBehaviour
         pickupGenerator = FindObjectOfType<PickupGenerator>();
     }
 
+    // If player hits a Pickup, depending on its type defined via Pickup.CS, a different function will be called
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Pickup"))
@@ -49,8 +61,7 @@ public class PickupManager : MonoBehaviour
                     break;
                 case Pickup.PickupType.SpeedPickup:
                     {
-                        SpeedPickup();
-                        
+                        SpeedPickup();      
                     }
                     break;
                 case Pickup.PickupType.JumpPickup:
@@ -62,8 +73,6 @@ public class PickupManager : MonoBehaviour
             }
 
             Destroy(other.gameObject);
-
-
         }
     }
   
@@ -74,57 +83,85 @@ public class PickupManager : MonoBehaviour
 
         if (playerHealth != null)
         {
-            playerHealth.GainHealth(amountOfHealth);
-            
+            playerHealth.GainHealth(healthIncrease);  
         }
     }
 
-    // SPEED POWERUP
+    // If a powerup is not active when speed powerup is collected,
+    // then player speed is increased briefly and hazard objects are ignored
     private void SpeedPickup()
     {
-        if (!JumpPickupActive())
+        if (!PickupActive(jumpTimeLeft) && !PickupActive(speedTimeLeft))
         {
             pickupGenerator.ChangeSpeedChance(-1);
-            if (SpeedPickupActive())
-            {
-                speedTimeLeft += speedPowerupTime;
-                return;  
-            }
 
-            speedTimeLeft += speedPowerupTime;
+            speedTimeLeft.timeLeft += speedPowerupTime;
             playerController = GetComponent<RoverController>();
 
             float newSpeed = playerController.DefaultMovementSpeed * speedMultilpier;
             playerController.SetCurrentSpeed(newSpeed);
             roverBody.GetComponent<Renderer>().material = speedPowerupMaterial;
 
-            StartCoroutine(ReduceSpeedTimer());
-           
-           
+            StartCoroutine(ReduceTimer(speedTimeLeft));
+  
         }
         
     }
 
-    
-    IEnumerator ReduceSpeedTimer()
+    // if a powerup is not active when jump powerup is collected, player jump power will be doubled 
+    private void JumpPickup()
+    {
+        if (!PickupActive(jumpTimeLeft) && !PickupActive(speedTimeLeft))
+        {
+            // picking up a jump pickup reduces the chance that it will spawn again for a while
+            pickupGenerator.ChangeJumpChance(-1);
+
+            jumpTimeLeft.timeLeft += jumpPowerupTime;
+            playerController = GetComponent<RoverController>();
+
+            float newJumpPower = playerController.DefaultJumpPower * jumpMultilpier;
+            playerController.SetCurrentJumpPower(newJumpPower);
+
+            roverBody.GetComponent<Renderer>().material = jumpPowerupMaterial;
+
+            StartCoroutine(ReduceTimer(jumpTimeLeft));
+        }
+    }
+
+
+    // reduces time of power up and if time runs out, player returns to normal state
+    IEnumerator ReduceTimer(PickupTimeleft pickupTimeleft)
     {
         yield return new WaitForSeconds(1f);
 
-        if (SpeedPickupActive())
+        if (PickupActive(pickupTimeleft))
         {
-            speedTimeLeft = speedTimeLeft - 1;
-            StartCoroutine(ReduceSpeedTimer());
+            pickupTimeleft.timeLeft--;
+            StartCoroutine(ReduceTimer(pickupTimeleft));
         }
         else
         {
-            StopSpeedPowerup();
+            if (pickupTimeleft.pickup == Pickup.PickupType.SpeedPickup)
+            {
+                StopSpeedPowerup();
+            }
+            else if (pickupTimeleft.pickup == Pickup.PickupType.SpeedPickup)
+            {
+                StopJumpPowerup();
+            }
         }
+
+
     }
 
-    public bool SpeedPickupActive()
+    // Checks if passed powerup is still active
+    public bool PickupActive(PickupTimeleft pickup)
     {
-        return speedTimeLeft > 0.0f;
+        return pickup.timeLeft > 0;
     }
+    
+
+    // if the powerup is no longer active, the player's original values are assumed 
 
 
     private void StopSpeedPowerup()
@@ -136,51 +173,7 @@ public class PickupManager : MonoBehaviour
         roverBody.GetComponent<Renderer>().material = defaultMaterial;
     }
 
-    // JUMP POWERUP
-    private void JumpPickup()
-    {
-        if (!SpeedPickupActive())
-        {
-            pickupGenerator.ChangeSpeedChance(1);
-            if (JumpPickupActive())
-            {
-                jumpTimeLeft += jumpPowerupTime;
-                return;      
-            }
-
-            jumpTimeLeft += jumpPowerupTime;
-            playerController = GetComponent<RoverController>();
-
-            float newJumpPower = playerController.DefaultJumpPower * jumpMultilpier;
-            playerController.SetCurrentJumpPower(newJumpPower);
-
-            roverBody.GetComponent<Renderer>().material = jumpPowerupMaterial;
-
-            StartCoroutine(ReduceJumpTimer());  
-        }
-    }
-
-    IEnumerator ReduceJumpTimer()
-    {
-        yield return new WaitForSeconds(1f);
-
-        if (JumpPickupActive())
-        {
-            jumpTimeLeft = jumpTimeLeft - 1;
-            StartCoroutine(ReduceJumpTimer());
-        }
-        else
-        {
-            StopJumpPowerup();
-        }
-
-
-    }
-    public bool JumpPickupActive()
-    {
-        return jumpTimeLeft > 0.0f;
-    }
-
+    
     private void StopJumpPowerup()
     {
         playerController = GetComponent<RoverController>();

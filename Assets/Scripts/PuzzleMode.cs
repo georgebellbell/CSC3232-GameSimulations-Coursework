@@ -29,42 +29,20 @@ public class PuzzleMode : MonoBehaviour
     float planetRadius;
     float excludeRange;
 
-
-
     private void Start()
     {
         managementSystem = FindObjectOfType<ManagementSystem>();
         planetCollider = GetComponentInChildren<SphereCollider>();
+        planetRadius = planetCollider.radius * transform.GetChild(0).transform.lossyScale.x;
+        excludeRange = deliveryPoint.GetComponent<SphereCollider>().radius * deliveryPoint.transform.lossyScale.x * 5f;
 
-        planetPhysicsMaterial = new PhysicMaterial();
-        planetPhysicsMaterial.frictionCombine = PhysicMaterialCombine.Minimum;
-        planetCollider.material = planetPhysicsMaterial;
+        AdjustNumberOfPoints();
 
-        planetRadius = planetCollider.radius * transform.GetChild(0).transform.lossyScale.x ;
-        excludeRange = deliveryPoint.GetComponent<SphereCollider>().radius * deliveryPoint.transform.lossyScale.x * 4f;
+        GenerateItems();
 
-
-        int maxNumberOfPoints = Mathf.RoundToInt((planetRadius ) / excludeRange);
-        if (totalNumberOfPoints > maxNumberOfPoints)
-        {
-            totalNumberOfPoints = maxNumberOfPoints;
-        }
-
-        GenerateObjects();
-        GeneratePoints();
         CheckAllPointsCovered();
-        CalculateRateOfChange();
-    }
 
-    private void CalculateRateOfChange()
-    {
-        currentPlanetTemperature = DefaultPlanetTemperature;
-        currentPlanetFriction = planetPhysicsMaterial.dynamicFriction;
-
-        timeToChange = GetComponent<Timer>().GetGameTime();
-
-        changePerSecondTemp = (0 - currentPlanetTemperature) / timeToChange;
-        changePerSecondFriction = (0 - currentPlanetFriction) / timeToChange;
+        InitialiseTemperatureChangeValues();
     }
 
     private void Update()
@@ -72,78 +50,50 @@ public class PuzzleMode : MonoBehaviour
         ReducePlanetTemperature();
     }
 
-    private void ReducePlanetTemperature()
+    // Number of points set in inspector but if number of points is too great for size of planet, the number is reduced to max planet can hold
+    private void AdjustNumberOfPoints()
     {
-        currentPlanetFriction = Mathf.Clamp(currentPlanetFriction + changePerSecondFriction * Time.deltaTime, 0, 1);
-        planetCollider.sharedMaterial.dynamicFriction = currentPlanetFriction;
-        currentPlanetTemperature = Mathf.Clamp(currentPlanetTemperature + changePerSecondTemp * Time.deltaTime, 0, DefaultPlanetTemperature);
-
-        Color tempColour = Color.Lerp(coldColor, hotColor, (currentPlanetTemperature / DefaultPlanetTemperature));
-
-
-        float roundedTemp = Mathf.Round(currentPlanetTemperature * 10f) * 0.1f;
-        planetTemperatureText.text = roundedTemp.ToString();
-        planetTemperatureText.color = tempColour;
-        planetTemperatureSymbol.color = tempColour;
-
-        GetComponentInChildren<Renderer>().material.color = tempColour;
+        int maxNumberOfPoints = Mathf.RoundToInt((planetRadius) / excludeRange);
+        if (totalNumberOfPoints > maxNumberOfPoints)
+        {
+            totalNumberOfPoints = maxNumberOfPoints;
+        }
     }
 
-    private void GenerateObjects()
+    // Loops through number of points and generates a pair of delivery points and objects
+    void GenerateItems()
     {
         for (int i = 0; i < totalNumberOfPoints; i++)
         {
-            Vector3 randomPosition = CreateUniquePosition(10);
-            objectPositions.Add(randomPosition);
-            GameObject newObject = Instantiate(deliveryObject);
-            newObject.transform.position = randomPosition;
-            newObject.GetComponent<GravityBody>().SetCurrentAttractor(gameObject.GetComponent<Planet>());
+            GeneratePoint();
+            GenerateObject();
         }
     }
 
-    void GeneratePoints()
+    void GenerateObject()
     {
-        for (int i = 0; i < totalNumberOfPoints; i++)
-        {
-            Vector3 randomPosition = CreateUniquePosition(10);
-            objectPositions.Add(randomPosition);
-            deliveryPoints.Add(Instantiate(deliveryPoint, randomPosition, Quaternion.identity));
-        }
+        Vector3 randomPosition = CreateUniquePosition();
+        // every time a random position is aquired, that transform is added to an array for checking later and avoiding
+        objectPositions.Add(randomPosition);
+
+        GameObject newObject = Instantiate(deliveryObject, randomPosition, Quaternion.identity);
+        newObject.GetComponent<GravityBody>().SetCurrentAttractor(gameObject.GetComponent<Planet>());
     }
 
-    private Vector3 CreateUniquePosition(int attemptsLeft)
+    void GeneratePoint()
     {
-        int attempts = attemptsLeft;
-        Vector3 potentialPosition = new Vector3();
+        Vector3 randomPosition = CreateUniquePosition();
+        objectPositions.Add(randomPosition);
 
-        if (excludeRange > planetRadius * 2)
-        {
-            excludeRange = planetRadius;
-        }
-       
-        potentialPosition = UnityEngine.Random.onUnitSphere * planetRadius;
-
-        if (objectPositions.Capacity == 0)
-        {
-            return potentialPosition;
-        }
-
-        foreach (Vector3 planetObject in objectPositions)
-        {
-            if (!(Vector3.Distance(potentialPosition, planetObject) >= excludeRange) && attempts != 0)
-            {
-                CreateUniquePosition(attempts--);
-            }
-               
-        }
-
-        return potentialPosition;   
+        deliveryPoints.Add(Instantiate(deliveryPoint, randomPosition, Quaternion.identity));
     }
 
+    // Called in start and when any delivery point is activated
+    // Loops through all delivery points and checks if they are active, if so, they win
     public void CheckAllPointsCovered()
     {
         numberOfActivePoints = 0;
-        foreach(GameObject currentDeliveryPoint in deliveryPoints)
+        foreach (GameObject currentDeliveryPoint in deliveryPoints)
         {
             if (currentDeliveryPoint.GetComponent<DeliveryPoint>().HasObject())
                 numberOfActivePoints++;
@@ -155,7 +105,73 @@ public class PuzzleMode : MonoBehaviour
         {
             managementSystem.WinGame();
         }
-
-        
     }
+
+    // Position of points and objects created with an element of reandomness
+    // But checks are done to ensure they spawn a certain distance from eachother
+    private Vector3 CreateUniquePosition()
+    {
+
+        Vector3 potentialPosition = UnityEngine.Random.onUnitSphere * planetRadius;
+
+        if (excludeRange > planetRadius * 2)
+        {
+            excludeRange = planetRadius;
+        }
+
+        // if it's the first item to be spawned no checks are needed
+        if (objectPositions.Capacity == 0)
+        {
+            return potentialPosition;
+        }
+
+        // checks through each of the existing item points
+        foreach (Vector3 planetObject in objectPositions)
+        {
+            // if random point is too close to another point, it will try again
+            float distbetween = Vector3.Distance(potentialPosition, planetObject);
+            if (distbetween < excludeRange * 2f)
+            {
+                return CreateUniquePosition();
+            }
+
+        }
+
+        return potentialPosition;
+    }
+
+    // Assigning and creation of variables and components
+    private void InitialiseTemperatureChangeValues()
+    {
+        planetPhysicsMaterial = new PhysicMaterial();
+        planetPhysicsMaterial.frictionCombine = PhysicMaterialCombine.Minimum;
+        planetCollider.material = planetPhysicsMaterial;
+
+        currentPlanetTemperature = DefaultPlanetTemperature;
+        currentPlanetFriction = planetPhysicsMaterial.dynamicFriction;
+
+        timeToChange = GetComponent<Timer>().GetGameTime();
+
+        // using time the level will be played, the rate at which friction and temp should be changed are calculated.
+        changePerSecondTemp = (0 - currentPlanetTemperature) / timeToChange;
+        changePerSecondFriction = (0 - currentPlanetFriction) / timeToChange;
+    }
+
+    // Dynamically changes the dynamicFriction of planet physics material as well as planet temperature and colour
+    private void ReducePlanetTemperature()
+    {
+        // Called every frame and tends towards 0
+        currentPlanetFriction = Mathf.Clamp(currentPlanetFriction + changePerSecondFriction * Time.deltaTime, 0, 1);
+        planetCollider.sharedMaterial.dynamicFriction = currentPlanetFriction;
+        currentPlanetTemperature = Mathf.Clamp(currentPlanetTemperature + changePerSecondTemp * Time.deltaTime, 0, DefaultPlanetTemperature);
+
+        float roundedTemp = Mathf.Round(currentPlanetTemperature * 10f) * 0.1f;
+        planetTemperatureText.text = roundedTemp.ToString();
+
+        Color tempColour = Color.Lerp(coldColor, hotColor, (currentPlanetTemperature / DefaultPlanetTemperature));
+        planetTemperatureText.color = tempColour;
+        planetTemperatureSymbol.color = tempColour;
+        GetComponentInChildren<Renderer>().material.color = tempColour;
+    }
+
 }

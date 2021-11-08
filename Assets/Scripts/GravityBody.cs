@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class GravityBody : MonoBehaviour
 {
-    //public GravityAttractor[] planets;
-    //public int currentPlanet = 0;
     [SerializeField] Planet currentPlanet;
     private Transform myTransform;
 
@@ -14,30 +10,21 @@ public class GravityBody : MonoBehaviour
 
     void Start()
     {
+        currentPlanet = FindObjectOfType<Planet>();
         Rigidbody rigidbody = GetComponent<Rigidbody>();
         rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         rigidbody.useGravity = false;
         myTransform = transform;
     }
 
-
-
+    // Every FixedUpdate the Attract function on the planet that the object this script is attached to will be called
+    // Creates the effect of gravity on a sphere
     void FixedUpdate()
     {
         currentPlanet.Attract(myTransform, objectMass);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Planet") && gameObject.tag == "Player")
-        {
-            RoverController playerController = gameObject.GetComponent<RoverController>();
-            if(playerController.enabled == false)
-            {
-                playerController.enabled = true;
-            }
-        }
-    }
+    // When instantiating objects
     public void SetCurrentAttractor(Planet newGravityAttractor)
     {
         currentPlanet = newGravityAttractor;

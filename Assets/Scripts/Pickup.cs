@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//Attached to each of the pickup objects, defining what they are during interactions with via PickupManager
 public class Pickup : MonoBehaviour
 {
     public enum PickupType

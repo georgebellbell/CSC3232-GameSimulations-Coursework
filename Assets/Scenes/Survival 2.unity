@@ -730,7 +730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1811819511, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1844865952, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: timerText
@@ -742,7 +742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1844865952, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: timeToComplete
-      value: 120000
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 4799935960745624032, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: m_Materials.Array.data[0]
