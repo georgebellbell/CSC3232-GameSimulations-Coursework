@@ -70,7 +70,8 @@ public class PowerupState : SurvivalState
         base.OnCollisionEnter(collision);
         if (collision.gameObject.CompareTag("Meteor"))
         {
-            GameObject.Destroy(collision.gameObject); 
+            GameObject.Destroy(collision.gameObject);
+            return;
         }
 
         if (collision.gameObject.CompareTag("Pickup"))

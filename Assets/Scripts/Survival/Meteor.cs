@@ -13,7 +13,13 @@ public class Meteor : MonoBehaviour
         {
             GenerateCrater(other);
             Destroy(gameObject);
-        }  
+        }
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log(other.gameObject.name);
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

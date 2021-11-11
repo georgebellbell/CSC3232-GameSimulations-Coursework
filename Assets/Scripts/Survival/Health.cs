@@ -104,25 +104,7 @@ public class Health : MonoBehaviour
             health = health + healPoints;
         }
     }
-    /*
-    // Collider around entire rover will destroy any Meteor objects that collide with it if the rover as a speed powerup active (immunity)
-    private void OnCollisionEnter(Collision other)
-    {
-        if (pickupManager.PickupActive(pickupManager.speedTimeLeft) && other.gameObject.CompareTag("Meteor"))
-        {
-            Destroy(other.gameObject);
-        }
-    }
-
-    // Similar to OnCollisionEnter but for the Crater objects
-    private void OnTriggerEnter(Collider other)
-    {
-        if (pickupManager.PickupActive(pickupManager.speedTimeLeft) && other.gameObject.CompareTag("Crater"))
-        {
-            Destroy(other.gameObject);
-        }
-    }
-    */
+    
 
     // Used for specific collisions and is called via OnCollisionEnter on the objects underneath this class
     public void OnChildCollisionEnter(RoverParts part, float damage)

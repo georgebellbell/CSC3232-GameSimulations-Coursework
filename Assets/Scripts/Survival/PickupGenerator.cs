@@ -54,7 +54,7 @@ public class PickupGenerator : MonoBehaviour
         entries.Add(newEntry);
     }
 
-    // A looping coroutine that will spawn a random pickup, taking into account the probabilities via the list
+    // A looping coroutine that will spawn a random pickup, taking into account the probabilities via the list, adding a stochastic element
     IEnumerator SpawnPickup()
     {
         yield return new WaitForSeconds(spawnRate);

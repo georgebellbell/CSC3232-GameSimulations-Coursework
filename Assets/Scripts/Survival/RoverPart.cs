@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+// Allows for specific collision between player and hazards on world
 public class RoverPart : MonoBehaviour
 {
     [SerializeField] Color damagedColor = Color.red;
@@ -28,20 +30,8 @@ public class RoverPart : MonoBehaviour
                 parent.GetComponent<Health>().OnChildCollisionEnter(thisPart, 16f);
             }
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (((roverStateMachine.currentState == roverStateMachine.noPowerupState || thisPart == RoverParts.Wheel) && other.gameObject.CompareTag("Crater")))
-        {
-            GetComponent<Renderer>().material.color = originalColor;
-        }
-    }
-
-    // If meteor hits player, the specific part that did will highlight red and damage done will be passed to Health.CS
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Meteor"))
+        else if (collision.gameObject.CompareTag("Meteor"))
         {
             if (roverStateMachine.currentState == roverStateMachine.noPowerupState)
             {
@@ -51,15 +41,13 @@ public class RoverPart : MonoBehaviour
         }
     }
 
-    // when exiting collision if player has no powerup active (or it is a wheel), their appearance will return completely to normal
-
-    private void OnCollisionExit(Collision collision)
+    // when exiting collision if player has no powerup active(or it is a wheel), their appearance will return completely to normal
+    private void OnTriggerExit(Collider other)
     {
-        if (!(roverStateMachine.currentState == roverStateMachine.noPowerupState || thisPart == RoverParts.Wheel) && collision.gameObject.CompareTag("Meteor") )
+        if (((roverStateMachine.currentState == roverStateMachine.noPowerupState || thisPart == RoverParts.Wheel) && (other.gameObject.CompareTag("Crater") || other.gameObject.CompareTag("Meteor"))))
         {
             GetComponent<Renderer>().material.color = originalColor;
         }
     }
-
-    
+   
 }

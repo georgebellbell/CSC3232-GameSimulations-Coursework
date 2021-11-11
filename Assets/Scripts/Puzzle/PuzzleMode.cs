@@ -107,7 +107,7 @@ public class PuzzleMode : MonoBehaviour
         }
     }
 
-    // Position of points and objects created with an element of reandomness
+    // Position of points and objects created with an element of randomness
     // But checks are done to ensure they spawn a certain distance from eachother
     private Vector3 CreateUniquePosition()
     {
