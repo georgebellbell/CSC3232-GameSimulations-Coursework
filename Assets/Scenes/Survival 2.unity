@@ -806,7 +806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4799935961318902890, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: thisPlanetMass
-      value: 500
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4799935961318902891, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: m_Name
@@ -1031,6 +1031,14 @@ PrefabInstance:
       propertyPath: pausedMenu
       value: 
       objectReference: {fileID: 956425374}
+    - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
+      propertyPath: puzzleControls
+      value: 
+      objectReference: {fileID: 1852214891}
+    - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
+      propertyPath: survivalControls
+      value: 
+      objectReference: {fileID: 2026136956}
     - target: {fileID: 730175314103771598, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
       propertyPath: m_Name
       value: ManagementSystem
@@ -1190,6 +1198,16 @@ GameObject:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5899438679322496555, guid: b1f9e06e79cf1544c97a706f5a497341, type: 3}
   m_PrefabInstance: {fileID: 1599681359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1852214891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 704603664096888649, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
+  m_PrefabInstance: {fileID: 956425372}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2026136956 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5415987102924844116, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
+  m_PrefabInstance: {fileID: 956425372}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2070969039
 GameObject:

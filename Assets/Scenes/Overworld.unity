@@ -520,8 +520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4517b899db8c443b9a7a4623c4a47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneIndex: 2
   planetSelectedOverlay: {fileID: 1402517571975226217, guid: 00b496f97532b814d8244ca8f60a6bb3, type: 3}
+  sceneIndex: 2
   planetName: 18 Delphini b
   planetMass: 160
   planetType: Survival
@@ -634,8 +634,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4517b899db8c443b9a7a4623c4a47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneIndex: 4
   planetSelectedOverlay: {fileID: 1402517571975226217, guid: 00b496f97532b814d8244ca8f60a6bb3, type: 3}
+  sceneIndex: 4
   planetName: 42 Draconis b
   planetMass: 100
   planetType: Puzzle
@@ -1016,8 +1016,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4517b899db8c443b9a7a4623c4a47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneIndex: 3
   planetSelectedOverlay: {fileID: 1402517571975226217, guid: 00b496f97532b814d8244ca8f60a6bb3, type: 3}
+  sceneIndex: 3
   planetName: 42 Draconis a
   planetMass: 80
   planetType: Puzzle
@@ -1203,7 +1203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 13, y: 15.8}
+  m_AnchoredPosition: {x: 13, y: 15.799988}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &802089369
@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 1121186221}
   - component: {fileID: 1121186220}
   m_Layer: 0
-  m_Name: Survival Planet 1 (1)
+  m_Name: Survival Planet 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1346,10 +1346,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4517b899db8c443b9a7a4623c4a47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneIndex: 5
   planetSelectedOverlay: {fileID: 1402517571975226217, guid: 00b496f97532b814d8244ca8f60a6bb3, type: 3}
+  sceneIndex: 5
   planetName: 89 Shaggi f
-  planetMass: 500
+  planetMass: 300
   planetType: Survival
 --- !u!135 &1121186221
 SphereCollider:

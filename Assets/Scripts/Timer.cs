@@ -10,23 +10,28 @@ public class Timer : MonoBehaviour
     ManagementSystem managementSystem;
     PickupGenerator pickupGenerator;
     Planet.PlanetType planetType;
-    // Start is called before the first frame update
+
     void Start()
     {
         managementSystem = FindObjectOfType<ManagementSystem>();
         planetType = GetComponent<Planet>().thisPlanetType;
         pickupGenerator = GetComponent<PickupGenerator>();
-
+        timerText.text = "Time left: " + timeToComplete;
         StartCoroutine(Countdown());
     }
 
     // Called at start of game and by itself if timer has not run 
     IEnumerator Countdown()
     {
-        // As time progresses, the chance of a certain pickup spawining increases
-        pickupGenerator.ChangeHealthChance(0.2);
-        pickupGenerator.ChangeJumpChance(0.15);
-        pickupGenerator.ChangeSpeedChance(0.1);
+
+        if (planetType == Planet.PlanetType.survival)
+        {
+            // As time progresses, the chance of a certain pickup spawining increases
+            pickupGenerator.ChangeHealthChance(0.2);
+            pickupGenerator.ChangeJumpChance(0.15);
+            pickupGenerator.ChangeSpeedChance(0.1);
+        }
+        
 
         yield return new WaitForSeconds(1f);
 
@@ -57,7 +62,7 @@ public class Timer : MonoBehaviour
     {
         // death animation
         // death sound
-        FindObjectOfType<RoverController>().enabled = false;
+        FindObjectOfType<RoverStateMachine>().enabled = false;
         yield return new WaitForSeconds(1f);
         FindObjectOfType<ManagementSystem>().LoseGame();
 

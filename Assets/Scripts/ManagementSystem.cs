@@ -8,9 +8,16 @@ public class ManagementSystem : MonoBehaviour
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
 
+    [SerializeField] GameObject survivalControls;
+    [SerializeField] GameObject puzzleControls;
+
+
     int currentScene;
     bool gameIsPaused;
 
+    bool gameFinished;
+
+    
     void Start()
     {
         Time.timeScale = 1;
@@ -18,12 +25,24 @@ public class ManagementSystem : MonoBehaviour
         winMenu.SetActive(false);
         loseMenu.SetActive(false);
 
+        if (FindObjectOfType<Planet>().thisPlanetType == Planet.PlanetType.survival)
+        {
+            survivalControls.SetActive(true);
+        }
+        else if (FindObjectOfType<Planet>().thisPlanetType == Planet.PlanetType.puzzle)
+        {
+            puzzleControls.SetActive(true);
+        }
+
         currentScene = SceneManager.GetActiveScene().buildIndex;
     }
 
     // Called in rover controller and toggles the game between a play and paused state
     public void TogglePause()
     {
+        if (gameFinished)
+            return;
+
         gameIsPaused = !gameIsPaused;
 
         if (gameIsPaused)
@@ -56,6 +75,7 @@ public class ManagementSystem : MonoBehaviour
     }
 
     // Brings up Paused UI and stops time in game
+    // Retains previous state of mouse as it differs for survival and puzzle
     private void PauseGame()
     {
         pausedMenu.SetActive(true);

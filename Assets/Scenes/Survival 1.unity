@@ -724,6 +724,10 @@ PrefabInstance:
       propertyPath: spawnRate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1811819511, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
+      propertyPath: meteorPrefab
+      value: 
+      objectReference: {fileID: 8610274126372567483, guid: ee080189b9797544bb4a098d64ecbc5c, type: 3}
     - target: {fileID: 1844865952, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: timerText
       value: 
@@ -944,6 +948,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 773630729050844955, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
   m_PrefabInstance: {fileID: 956425372}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &956425375 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 704603664096888649, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
+  m_PrefabInstance: {fileID: 956425372}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &956425376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5415987102924844116, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
+  m_PrefabInstance: {fileID: 956425372}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1099226370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1007,6 +1021,14 @@ PrefabInstance:
       propertyPath: pausedMenu
       value: 
       objectReference: {fileID: 956425374}
+    - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
+      propertyPath: puzzleControls
+      value: 
+      objectReference: {fileID: 956425375}
+    - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
+      propertyPath: survivalControls
+      value: 
+      objectReference: {fileID: 956425376}
     - target: {fileID: 730175314103771598, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
       propertyPath: m_Name
       value: ManagementSystem

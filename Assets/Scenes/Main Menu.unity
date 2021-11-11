@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 1
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  thisPart: 1
 --- !u!65 &65294756
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -234,6 +234,57 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65294753}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &101437563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 101437564}
+  - component: {fileID: 101437565}
+  m_Layer: 0
+  m_Name: Planet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &101437564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101437563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1322000208}
+  m_Father: {fileID: 312939474}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &101437565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101437563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c890771441e22d4fa96acc6cf34835c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: -10
+  distance: 0
+  maximumGravity: -10
+  minimumGravity: -25
+  thisPlanetMass: 160
+  thisPlanetType: 2
+  planetRadius: 0
 --- !u!1 &312939473
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +313,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1099341156}
-  - {fileID: 1322000208}
+  - {fileID: 101437564}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -313,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d18854f1ac9a404fb6eb2044bd29dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlanet: {fileID: 1322000209}
+  currentPlanet: {fileID: 0}
   objectMass: 10
 --- !u!54 &435208223
 Rigidbody:
@@ -440,8 +491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 1
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  thisPart: 1
 --- !u!65 &717620139
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -517,7 +568,6 @@ GameObject:
   - component: {fileID: 833393551}
   - component: {fileID: 833393550}
   - component: {fileID: 833393549}
-  - component: {fileID: 833393548}
   - component: {fileID: 833393547}
   m_Layer: 0
   m_Name: Rover
@@ -535,33 +585,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 833393546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fed4f9d2eeba14f9c58553c4be78fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 30623c257b3c7c247b3ac561f5bb36fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMaterial: {fileID: 0}
-  speedPowerupMaterial: {fileID: 2100000, guid: b4fa91a7f9820a7478e9055a72ab6528, type: 2}
-  jumpPowerupMaterial: {fileID: 2100000, guid: 69e734e811d92e9408d9015baa6e5eb9, type: 2}
-  amountOfHealth: 20
-  speedMultilpier: 2
-  speedTimeLeft: 0
-  jumpMultilpier: 1.5
-  jumpTimeLeft: 0
---- !u!114 &833393548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833393546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5e3031ca19221c43aceb675a3379e7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 0}
   DefaultMovementSpeed: 8
+  currentMovementSpeed: 0
+  speedMultilpier: 2
+  speedPowerupTime: 3
+  rotationSpeed: 750
   DefaultJumpPower: 350
+  currentJumpPower: 0
+  jumpMultilpier: 1.5
+  jumpPowerupTime: 4
   isJumping: 0
   startJumping: 0
+  managementSystem: {fileID: 0}
+  pickupGenerator: {fileID: 0}
+  movementDirection: {x: 0, y: 0, z: 0}
+  healthIncrease: 20
+  playerHealth: {fileID: 0}
+  defaultMaterial: {fileID: 0}
+  roverBody: {fileID: 0}
 --- !u!114 &833393549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,7 +619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d18854f1ac9a404fb6eb2044bd29dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlanet: {fileID: 1322000209}
+  currentPlanet: {fileID: 0}
   objectMass: 10
 --- !u!54 &833393550
 Rigidbody:
@@ -649,8 +694,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099341155}
-  m_LocalRotation: {x: -0, y: -0, z: 0.20820363, w: 0.9780855}
-  m_LocalPosition: {x: -4.98, y: 2.74, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.23745249, w: 0.9713992}
+  m_LocalPosition: {x: -5.51, y: 3.95, z: 0}
   m_LocalScale: {x: 0.0664797, y: 0.0664797, z: 0.06647969}
   m_Children:
   - {fileID: 435208221}
@@ -659,7 +704,7 @@ Transform:
   - {fileID: 2131153839}
   m_Father: {fileID: 312939474}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 24.034}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 27.472}
 --- !u!114 &1099341157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -736,7 +781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d18854f1ac9a404fb6eb2044bd29dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlanet: {fileID: 1322000209}
+  currentPlanet: {fileID: 0}
   objectMass: 10
 --- !u!54 &1107463603
 Rigidbody:
@@ -864,8 +909,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 0
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  thisPart: 0
 --- !u!65 &1251528168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -954,9 +999,8 @@ GameObject:
   - component: {fileID: 1322000212}
   - component: {fileID: 1322000211}
   - component: {fileID: 1322000210}
-  - component: {fileID: 1322000209}
   m_Layer: 0
-  m_Name: Planet
+  m_Name: Sphere
   m_TagString: Planet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -970,30 +1014,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322000207}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.21, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 8.6592, y: 8.6592, z: 8.6592}
   m_Children: []
-  m_Father: {fileID: 312939474}
-  m_RootOrder: 1
+  m_Father: {fileID: 101437564}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1322000209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1322000207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c890771441e22d4fa96acc6cf34835c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: -10
-  distance: 0
-  maximumGravity: -10
-  minimumGravity: -25
-  thisPlanetMass: 160
-  thisPlanetType: 0
 --- !u!135 &1322000210
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1103,8 +1129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 1
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  thisPart: 1
 --- !u!65 &1346956052
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1338,7 +1364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504925449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.03, y: 0.62, z: -11.39}
+  m_LocalPosition: {x: 0.03, y: 1.8, z: -11.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1456,8 +1482,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 1
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  thisPart: 1
 --- !u!65 &1591385715
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1568,7 +1594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d18854f1ac9a404fb6eb2044bd29dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlanet: {fileID: 1322000209}
+  currentPlanet: {fileID: 0}
   objectMass: 10
 --- !u!54 &1969336041
 Rigidbody:
@@ -1696,7 +1722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d18854f1ac9a404fb6eb2044bd29dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlanet: {fileID: 1322000209}
+  currentPlanet: {fileID: 0}
   objectMass: 10
 --- !u!54 &2131153841
 Rigidbody:

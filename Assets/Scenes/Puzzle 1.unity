@@ -186,6 +186,14 @@ PrefabInstance:
       propertyPath: pausedMenu
       value: 
       objectReference: {fileID: 236404370}
+    - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
+      propertyPath: puzzleControls
+      value: 
+      objectReference: {fileID: 236404372}
+    - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
+      propertyPath: survivalControls
+      value: 
+      objectReference: {fileID: 236404373}
     - target: {fileID: 730175314103771598, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
       propertyPath: m_Name
       value: ManagementSystem
@@ -244,7 +252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43014897724222348, guid: c774794912a9e024fb9aa71b32d04612, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 43014897724222348, guid: c774794912a9e024fb9aa71b32d04612, type: 3}
       propertyPath: m_AnchorMax.x
@@ -379,7 +387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 773630729050844935, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 773630729050844935, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -505,6 +513,16 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 773630729050844935, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
   m_PrefabInstance: {fileID: 236404369}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &236404372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 704603664096888649, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
+  m_PrefabInstance: {fileID: 236404369}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &236404373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5415987102924844116, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
+  m_PrefabInstance: {fileID: 236404369}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &319191226
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5899438679322496555, guid: b1f9e06e79cf1544c97a706f5a497341, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5899438679322496555, guid: b1f9e06e79cf1544c97a706f5a497341, type: 3}
       propertyPath: m_AnchorMax.x
@@ -736,7 +754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 717645976368492767, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.77
+      value: 6.09
       objectReference: {fileID: 0}
     - target: {fileID: 717645976368492767, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
       propertyPath: m_LocalPosition.z
@@ -997,15 +1015,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7156372000863942245, guid: 93c963b9887e0794d881e8f022954003, type: 3}
       propertyPath: m_LocalScale.x
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7156372000863942245, guid: 93c963b9887e0794d881e8f022954003, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7156372000863942245, guid: 93c963b9887e0794d881e8f022954003, type: 3}
       propertyPath: m_LocalScale.z
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7156372000863942246, guid: 93c963b9887e0794d881e8f022954003, type: 3}
       propertyPath: m_Material
@@ -1165,7 +1183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4322627671191119672, guid: f247b816c254de743acf1fcfd2278677, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4322627671191119672, guid: f247b816c254de743acf1fcfd2278677, type: 3}
       propertyPath: m_AnchorMax.x

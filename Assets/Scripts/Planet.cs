@@ -17,7 +17,35 @@ public class Planet : MonoBehaviour
     [SerializeField] float thisPlanetMass = 160;
 
     public PlanetType thisPlanetType = PlanetType.survival;
+
+    public float planetRadius;
+
     
+    private void Start()
+    {
+        planetRadius = GetComponentInChildren<SphereCollider>().radius * transform.GetChild(0).transform.lossyScale.x;
+
+        if (thisPlanetType == PlanetType.survival)
+        {
+            GetComponent<MeteorGenerator>().StartMeteors();
+            GetComponent<PickupGenerator>().StartPickups();
+        }
+        else if (thisPlanetType == PlanetType.puzzle)
+        {
+            GetComponent<PuzzleMode>().StartPuzzle();
+        }
+    }
+
+
+    private void Update()
+    {
+        if (thisPlanetType == PlanetType.puzzle)
+        {
+            GetComponent<PuzzleMode>().UpdatePuzzlePlanet();
+        }
+    }
+    
+
     // Referenced by GravityBody.cs and pulls the object towards the transform of
     // the object this is attached to, i.e the center of the planet
     public void Attract(Transform player, float playerMass)

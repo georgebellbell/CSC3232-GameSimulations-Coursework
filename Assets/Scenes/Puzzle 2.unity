@@ -186,6 +186,14 @@ PrefabInstance:
       propertyPath: pausedMenu
       value: 
       objectReference: {fileID: 236404370}
+    - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
+      propertyPath: puzzleControls
+      value: 
+      objectReference: {fileID: 236404372}
+    - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
+      propertyPath: survivalControls
+      value: 
+      objectReference: {fileID: 236404373}
     - target: {fileID: 730175314103771598, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
       propertyPath: m_Name
       value: ManagementSystem
@@ -503,6 +511,16 @@ GameObject:
 --- !u!224 &236404371 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 773630729050844935, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
+  m_PrefabInstance: {fileID: 236404369}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &236404372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 704603664096888649, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
+  m_PrefabInstance: {fileID: 236404369}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &236404373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5415987102924844116, guid: 59fbfc9f0cf391345a644d7c49e11a7c, type: 3}
   m_PrefabInstance: {fileID: 236404369}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &319191226

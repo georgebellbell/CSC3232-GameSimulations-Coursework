@@ -123,8 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 0
   damagedColor: {r: 0.6415094, g: 0.04538981, b: 0.04538981, a: 1}
+  thisPart: 0
 --- !u!1 &2469934212992848868
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,8 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 1
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  thisPart: 1
 --- !u!1 &3242391474323166501
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,9 +331,8 @@ GameObject:
   - component: {fileID: 766563291775262384}
   - component: {fileID: 429849272989319563}
   - component: {fileID: 8558481161976610547}
-  - component: {fileID: 1745745116330723898}
   - component: {fileID: 5761118130746912257}
-  - component: {fileID: 5028008607789470824}
+  - component: {fileID: 1449184047}
   m_Layer: 0
   m_Name: Rover
   m_TagString: Player
@@ -404,22 +403,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPlanet: {fileID: 0}
   objectMass: 10
---- !u!114 &1745745116330723898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4687010748723577229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5e3031ca19221c43aceb675a3379e7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DefaultMovementSpeed: 8
-  DefaultJumpPower: 350
-  isJumping: 0
-  startJumping: 0
 --- !u!114 &5761118130746912257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,7 +417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthText: {fileID: 0}
   healthBarImage: {fileID: 0}
---- !u!114 &5028008607789470824
+--- !u!114 &1449184047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,17 +426,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 4687010748723577229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fed4f9d2eeba14f9c58553c4be78fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 30623c257b3c7c247b3ac561f5bb36fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMaterial: {fileID: 0}
-  speedPowerupMaterial: {fileID: 2100000, guid: b4fa91a7f9820a7478e9055a72ab6528, type: 2}
-  jumpPowerupMaterial: {fileID: 2100000, guid: 69e734e811d92e9408d9015baa6e5eb9, type: 2}
-  amountOfHealth: 20
+  rigidbody: {fileID: 0}
+  DefaultMovementSpeed: 8
+  currentMovementSpeed: 0
   speedMultilpier: 2
-  speedTimeLeft: 0
+  speedPowerupTime: 3
+  rotationSpeed: 750
+  DefaultJumpPower: 350
+  currentJumpPower: 0
   jumpMultilpier: 1.5
-  jumpTimeLeft: 0
+  jumpPowerupTime: 4
+  isJumping: 0
+  startJumping: 0
+  managementSystem: {fileID: 0}
+  pickupGenerator: {fileID: 0}
+  movementDirection: {x: 0, y: 0, z: 0}
+  healthIncrease: 20
+  playerHealth: {fileID: 0}
+  defaultMaterial: {fileID: 0}
+  roverBody: {fileID: 0}
 --- !u!1 &5741248096150002896
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,8 +557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 1
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  thisPart: 1
 --- !u!1 &7013013740952203239
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,8 +668,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 1
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  thisPart: 1
 --- !u!1 &8459470530311694743
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,5 +779,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6962d205e34c34b9e892bdcd9d4de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisPart: 1
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  thisPart: 1
