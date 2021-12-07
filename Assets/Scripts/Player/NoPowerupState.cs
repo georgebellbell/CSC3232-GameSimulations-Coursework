@@ -66,5 +66,9 @@ public class NoPowerupState : SurvivalState
                     break;
             }
         }
+        if (collision.gameObject.CompareTag("ForceField"))
+        {
+            Debug.Log("You hit your tail and died");
+        }
     }
 }

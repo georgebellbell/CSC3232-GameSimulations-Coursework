@@ -191,6 +191,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 236404372}
     - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
+      propertyPath: nextLevelButton
+      value: 
+      objectReference: {fileID: 168822967}
+    - target: {fileID: 730175314103771593, guid: bfb6b9c2c232f524f8627ade51837ca9, type: 3}
       propertyPath: survivalControls
       value: 
       objectReference: {fileID: 236404373}
@@ -370,6 +374,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 43014897724222349, guid: c774794912a9e024fb9aa71b32d04612, type: 3}
   m_PrefabInstance: {fileID: 168822964}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &168822967 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 43014897363616535, guid: c774794912a9e024fb9aa71b32d04612, type: 3}
+  m_PrefabInstance: {fileID: 168822964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &236404369
 PrefabInstance:
   m_ObjectHideFlags: 0

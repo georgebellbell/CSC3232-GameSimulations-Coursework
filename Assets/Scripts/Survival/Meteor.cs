@@ -12,14 +12,10 @@ public class Meteor : MonoBehaviour
         if (other.gameObject.CompareTag("Planet"))
         {
             GenerateCrater(other);
-            Destroy(gameObject);
+            
         }
 
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log(other.gameObject.name);
-            Destroy(gameObject);
-        }
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +23,7 @@ public class Meteor : MonoBehaviour
         if (other.gameObject.CompareTag("Crater"))
         {
             GenerateLargerCrater(other);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }   
     }
 

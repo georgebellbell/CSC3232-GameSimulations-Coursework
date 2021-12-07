@@ -1,6 +1,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System;
+using UnityEngine.UI;
 
 // Will be developed in part 2 to include pathfinding to create path of planets
 public class OverworldNavigator : MonoBehaviour
@@ -11,12 +14,43 @@ public class OverworldNavigator : MonoBehaviour
     [SerializeField] TextMeshProUGUI gameTypeText;
     [SerializeField] GameObject stats;
 
+    
+
     [SerializeField] GameObject camera;
+
+    GameObject navigationPath;
+    LineRenderer lineRenderer;
+    [SerializeField] Material lineMaterial;
+    [SerializeField] float lineWidth;
+
+    List<int> planetIndexes = new List<int>();
+    List<OverworldPlanet> planets = new List<OverworldPlanet>();
 
     float yChange;
     float xChange;
     float zChange;
 
+    LevelManager levelManager;
+
+    class PlanetLinks
+    {
+        GameObject firstPlanet;
+        GameObject secondPlanet;
+        float distanceBetweenPlanets;
+    }
+
+
+        private void Start()
+    {
+        navigationPath = Instantiate(new GameObject());
+
+        lineRenderer = navigationPath.AddComponent<LineRenderer>();
+        lineRenderer.startWidth = lineWidth;
+        lineRenderer.endWidth = lineWidth;
+        lineRenderer.material = lineMaterial;
+
+        levelManager = FindObjectOfType<LevelManager>();
+    }
     private void Update()
     {
         ChangeCameraPosition();
@@ -76,5 +110,50 @@ public class OverworldNavigator : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void NewPlanetAdded(OverworldPlanet newPlanet)
+    {
 
+        int newPlanetIndex = newPlanet.GetPlanetIndex();
+
+        if (planetIndexes.Capacity != 0)
+        {
+            foreach (int planetIndex in planetIndexes)
+            {
+                if (planetIndex == newPlanetIndex)
+                {
+                    Debug.Log(planetIndex);
+                    planetIndexes.Remove(planetIndex);
+                    planets.Remove(newPlanet);
+                    CheckNumberOfSelectedPlanets();
+                    
+                    return;
+                }
+            }
+        }
+
+        planetIndexes.Add(newPlanetIndex);
+        planets.Add(newPlanet);
+
+        CheckNumberOfSelectedPlanets();
+    }
+
+    private void CheckNumberOfSelectedPlanets()
+    {
+       
+        
+            
+        lineRenderer.positionCount = planets.Count;
+        for (int i = 1; i < planets.Count; i++)
+        {
+            Debug.Log(planets[i].transform.position);
+            lineRenderer.SetPosition(i, planets[i].transform.position);
+            lineRenderer.SetPosition(i - 1, planets[i - 1].transform.position);
+        }
+
+        bool enoughLevelsSelected = planetIndexes.Count >= 2;
+        
+        
+    }
+
+    
 }

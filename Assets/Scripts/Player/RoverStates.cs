@@ -45,6 +45,7 @@ public class RoverStates : BaseState
         {
             rover_sm.isJumping = true;
             rover_sm.startJumping = true;
+            rover_sm.jumpAnimator.SetTrigger("StartJumping");
         }
     }
 
@@ -63,7 +64,17 @@ public class RoverStates : BaseState
             rover_sm.rigidbody.AddForce(rover_sm.transform.up * rover_sm.currentJumpPower * Time.deltaTime, ForceMode.Impulse);
         }
 
+        if (rover_sm.isJumping)
+        {
+            rover_sm.jumpAnimator.SetTrigger("JumpHeightReached");
+        }
 
+
+    }
+
+    private void StopJumping()
+    {
+       
     }
 
     // when in a rover state, game can be paused and UI appear. Overwritten by MenuState due to it not being needed there

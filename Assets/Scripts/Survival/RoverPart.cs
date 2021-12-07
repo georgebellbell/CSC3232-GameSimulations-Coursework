@@ -44,7 +44,7 @@ public class RoverPart : MonoBehaviour
     // when exiting collision if player has no powerup active(or it is a wheel), their appearance will return completely to normal
     private void OnTriggerExit(Collider other)
     {
-        if (((roverStateMachine.currentState == roverStateMachine.noPowerupState || thisPart == RoverParts.Wheel) && (other.gameObject.CompareTag("Crater") || other.gameObject.CompareTag("Meteor"))))
+        if ((roverStateMachine.currentState == roverStateMachine.noPowerupState || thisPart == RoverParts.Wheel) && (other.gameObject.CompareTag("Crater") || other.gameObject.CompareTag("Meteor")))
         {
             GetComponent<Renderer>().material.color = originalColor;
         }

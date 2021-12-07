@@ -57,44 +57,48 @@ public class PickupGenerator : MonoBehaviour
     // A looping coroutine that will spawn a random pickup, taking into account the probabilities via the list, adding a stochastic element
     IEnumerator SpawnPickup()
     {
-        yield return new WaitForSeconds(spawnRate);
-
-        float radius = GetComponentInChildren<SphereCollider>().radius * transform.GetChild(0).transform.lossyScale.x;
-        Vector3 pos = UnityEngine.Random.onUnitSphere * radius * 2;
-
-        GameObject newPickup = null;
-
-        // Random pickup is chosen and created and the probability of the
-        // two non health pickups spawining is significantly lowered
-        switch (GetRandomPickup())
+        while (true)
         {
-            case Pickup.PickupType.HealthPickup:
-                {
-                    newPickup = Instantiate(pickupHealth);
-                }
-                break;
+            yield return new WaitForSeconds(spawnRate);
 
-            case Pickup.PickupType.JumpPickup:
-                {
-                    newPickup = Instantiate(pickupJump);
-                    ChangeJumpChance(-1);
-                }
-                break;
+            float radius = GetComponentInChildren<SphereCollider>().radius * transform.GetChild(0).transform.lossyScale.x;
+            Vector3 pos = UnityEngine.Random.onUnitSphere * radius * 2;
 
-            case Pickup.PickupType.SpeedPickup:
-                {
-                    newPickup = Instantiate(pickupSpeed);
-                    ChangeSpeedChance(-1);
-                }
-                break;
+            GameObject newPickup = null;
 
+            // Random pickup is chosen and created and the probability of the
+            // two non health pickups spawining is significantly lowered
+            switch (GetRandomPickup())
+            {
+                case Pickup.PickupType.HealthPickup:
+                    {
+                        newPickup = Instantiate(pickupHealth);
+                    }
+                    break;
+
+                case Pickup.PickupType.JumpPickup:
+                    {
+                        newPickup = Instantiate(pickupJump);
+                        ChangeJumpChance(-1);
+                    }
+                    break;
+
+                case Pickup.PickupType.SpeedPickup:
+                    {
+                        newPickup = Instantiate(pickupSpeed);
+                        ChangeSpeedChance(-1);
+                    }
+                    break;
+
+            }
+
+            newPickup.GetComponent<GravityBody>().SetCurrentAttractor(gameObject.GetComponent<Planet>());
+            newPickup.transform.position = pos;
+            newPickup.transform.parent = pickupParent.transform;
         }
+        
 
-        newPickup.GetComponent<GravityBody>().SetCurrentAttractor(gameObject.GetComponent<Planet>());
-        newPickup.transform.position = pos;
-        newPickup.transform.parent = pickupParent.transform;
-
-        StartCoroutine(SpawnPickup());
+        
     }
 
 

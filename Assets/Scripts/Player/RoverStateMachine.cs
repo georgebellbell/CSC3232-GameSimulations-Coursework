@@ -27,6 +27,7 @@ public class RoverStateMachine : StateMachine
     public float currentJumpPower;
     public float jumpMultilpier = 1.5f;
     public float jumpPowerupTime = 4f;
+    public Animator jumpAnimator;
 
     public bool isJumping = false;
     public bool startJumping = false;
@@ -52,6 +53,7 @@ public class RoverStateMachine : StateMachine
         speedPowerupState = new SpeedPowerupState(this);
         puzzleState = new PuzzleState(this);
         menuState = new MenuState(this);
+       
 
         Time.timeScale = 1;
         rigidbody = GetComponent<Rigidbody>();
@@ -60,6 +62,7 @@ public class RoverStateMachine : StateMachine
         playerHealth = GetComponent<Health>();
         roverBody = GameObject.Find("RoverBody");
         defaultMaterial = roverBody.GetComponent<Renderer>().material;
+        jumpAnimator = GetComponent<Animator>();
 
         currentMovementSpeed = DefaultMovementSpeed;
         currentJumpPower = DefaultJumpPower;

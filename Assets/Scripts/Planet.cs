@@ -7,7 +7,8 @@ public class Planet : MonoBehaviour
     {
         survival,
         puzzle,
-        menu
+        menu,
+        smart
     };
 
     [SerializeField] float gravity = -10f;

@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 // Manages the state of the game, stopping it when player wins, loses or pauses it
 public class ManagementSystem : MonoBehaviour
@@ -11,15 +14,22 @@ public class ManagementSystem : MonoBehaviour
     [SerializeField] GameObject survivalControls;
     [SerializeField] GameObject puzzleControls;
 
+    [SerializeField] TextMeshProUGUI nextLevelButton;
+
 
     int currentScene;
+    int nextScene;
+
     bool gameIsPaused;
 
     bool gameFinished;
 
+    LevelManager levelManager;
+
     
     void Start()
     {
+        
         Time.timeScale = 1;
         pausedMenu.SetActive(false);
         winMenu.SetActive(false);
@@ -28,13 +38,37 @@ public class ManagementSystem : MonoBehaviour
         if (FindObjectOfType<Planet>().thisPlanetType == Planet.PlanetType.survival)
         {
             survivalControls.SetActive(true);
+          
         }
         else if (FindObjectOfType<Planet>().thisPlanetType == Planet.PlanetType.puzzle)
         {
             puzzleControls.SetActive(true);
         }
-
         currentScene = SceneManager.GetActiveScene().buildIndex;
+        levelManager = FindObjectOfType<LevelManager>();
+        DetermineNextLevel();
+    }
+
+    private void DetermineNextLevel()
+    {
+        int[] levelsToPlay = levelManager.GetPlanetPath();
+        //Debug.Log(levelsToPlay.Count);
+        if (levelsToPlay[levelsToPlay.Length - 1] == currentScene)
+        {
+            nextLevelButton.text = "Return to menu";
+            nextScene = 1;
+            return;
+        }
+
+        for (int i = 0; i < levelsToPlay.Length; i++)
+        {
+            if (levelsToPlay[i] == currentScene)
+            {
+                Debug.Log(levelsToPlay[i + 1]);
+                nextScene = levelsToPlay[i + 1];
+                return;
+            }
+        }
     }
 
     // Called in rover controller and toggles the game between a play and paused state
@@ -103,7 +137,6 @@ public class ManagementSystem : MonoBehaviour
     // of planets to traverse between
     public void LoadNextLevel()
     {
-        int nextScene = (currentScene + 1) % SceneManager.sceneCountInBuildSettings;
         SceneManager.LoadScene(nextScene);
     }
 
