@@ -28,7 +28,6 @@ public class FlockingEnemy : MonoBehaviour
 
     [SerializeField] bool allign, seperate, avoid, cohesion;
 
-    float planetRadius;
 
     [SerializeField] FlockingEnemy[] flockingEnemies;
 
@@ -45,7 +44,7 @@ public class FlockingEnemy : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         numberOfEnemies = generator.GetTotalNumberOfEnemies();
-        planetRadius = generator.GetRadius();
+        
         flockingEnemies = FindObjectsOfType<FlockingEnemy>();
 
         flockingValue = 1;
@@ -69,7 +68,7 @@ public class FlockingEnemy : MonoBehaviour
 
     }
 
-    
+   
 
     private void Allignment()
     {
@@ -110,9 +109,9 @@ public class FlockingEnemy : MonoBehaviour
 
     private float CalculateArcLength(float distanceBetweenPoints)
     {
-        float degree = 2 * Mathf.Asin(distanceBetweenPoints / (2 * planetRadius));
+        float degree = 2 * Mathf.Asin(distanceBetweenPoints / (2 * MainToolbox.planetRadius));
 
-        return degree * planetRadius;
+        return degree * MainToolbox.planetRadius;
     }
 
     private void Separation()

@@ -26,14 +26,14 @@ public class PuzzleMode : MonoBehaviour
 
     SphereCollider planetCollider;
     PhysicMaterial planetPhysicsMaterial;
-    float planetRadius;
+
     float excludeRange;
 
     public void StartPuzzle()
     {
         managementSystem = FindObjectOfType<ManagementSystem>();
         planetCollider = GetComponentInChildren<SphereCollider>();
-        planetRadius = planetCollider.radius * transform.GetChild(0).transform.lossyScale.x;
+        
         excludeRange = deliveryPoint.GetComponent<SphereCollider>().radius * deliveryPoint.transform.lossyScale.x * 5f;
 
         AdjustNumberOfPoints();
@@ -53,7 +53,7 @@ public class PuzzleMode : MonoBehaviour
     // Number of points set in inspector but if number of points is too great for size of planet, the number is reduced to max planet can hold
     private void AdjustNumberOfPoints()
     {
-        int maxNumberOfPoints = Mathf.RoundToInt((planetRadius) / excludeRange);
+        int maxNumberOfPoints = Mathf.RoundToInt((MainToolbox.planetRadius) / excludeRange);
         if (totalNumberOfPoints > maxNumberOfPoints)
         {
             totalNumberOfPoints = maxNumberOfPoints;
@@ -112,11 +112,11 @@ public class PuzzleMode : MonoBehaviour
     private Vector3 CreateUniquePosition()
     {
 
-        Vector3 potentialPosition = UnityEngine.Random.onUnitSphere * planetRadius;
+        Vector3 potentialPosition = UnityEngine.Random.onUnitSphere * MainToolbox.planetRadius;
 
-        if (excludeRange > planetRadius * 2)
+        if (excludeRange > MainToolbox.planetRadius * 2)
         {
-            excludeRange = planetRadius;
+            excludeRange = MainToolbox.planetRadius;
         }
 
         // if it's the first item to be spawned no checks are needed

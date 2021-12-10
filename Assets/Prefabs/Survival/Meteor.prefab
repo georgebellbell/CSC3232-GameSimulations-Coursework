@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meteorCrater: {fileID: 3056886453555390075, guid: 3c056da7ebbd8154c871229a2a86469a, type: 3}
+  explosion: {fileID: 8300000, guid: 66972810b034c324c9e25a30e2812fdf, type: 3}
 --- !u!114 &6436449531552404204
 MonoBehaviour:
   m_ObjectHideFlags: 0

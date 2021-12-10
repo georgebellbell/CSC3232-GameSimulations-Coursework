@@ -22,9 +22,17 @@ public class Planet : MonoBehaviour
     public float planetRadius;
 
     
-    private void Start()
+
+    private void Awake()
     {
         planetRadius = GetComponentInChildren<SphereCollider>().radius * transform.GetChild(0).transform.lossyScale.x;
+        MainToolbox.planetRadius = planetRadius;
+        MainToolbox.planetTransform = this.transform;
+        MainToolbox.planet = this;
+    }
+    private void Start()
+    {
+        
 
         if (thisPlanetType == PlanetType.survival)
         {
@@ -42,7 +50,7 @@ public class Planet : MonoBehaviour
     {
         if (thisPlanetType == PlanetType.puzzle)
         {
-            GetComponent<PuzzleMode>().UpdatePuzzlePlanet();
+            //GetComponent<PuzzleMode>().UpdatePuzzlePlanet();
         }
     }
     

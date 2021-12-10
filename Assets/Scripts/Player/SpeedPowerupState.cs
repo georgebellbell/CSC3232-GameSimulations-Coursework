@@ -34,12 +34,14 @@ public class SpeedPowerupState : PowerupState
 
     private void IncreaseSize()
     {
-        rover_sm.transform.localScale = rover_sm.transform.localScale  * 2;
+        //rover_sm.transform.localScale = rover_sm.transform.localScale  * 2;
+        rover_sm.jumpAnimator.SetTrigger("IncreaseSize");
     }
 
     private void ReduceSize()
     {
-        rover_sm.transform.localScale = rover_sm.transform.localScale * 0.5f;
+        //rover_sm.transform.localScale = rover_sm.transform.localScale * 0.5f;
+        rover_sm.jumpAnimator.SetTrigger("DecreaseSize");
     }
 
     // Sets the time for this powerup

@@ -9,15 +9,13 @@ public class FlockingEnemyGenerator : MonoBehaviour
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] int numberOfEnemies = 50;
 
-    SphereCollider planetCollider;
-    float planetRadius;
+
 
     GameObject enemyParent;
     // Start is called before the first frame update
     void Awake()
     {
-        planetCollider = GetComponentInChildren<SphereCollider>();
-        planetRadius = planetCollider.radius * transform.GetChild(0).transform.lossyScale.x;
+        
         enemyParent = GameObject.Find("EnemyParent");
         GenerateEnemies();
     }
@@ -26,7 +24,7 @@ public class FlockingEnemyGenerator : MonoBehaviour
     {
         for (int i = 0; i < numberOfEnemies - 1; i++)
         {
-            Vector3 randomPosition = UnityEngine.Random.onUnitSphere * planetRadius;
+            Vector3 randomPosition = UnityEngine.Random.onUnitSphere * MainToolbox.planetRadius;
 
             GameObject newObject = Instantiate(enemyPrefab, randomPosition, Quaternion.identity, enemyParent.transform);
             newObject.GetComponent<GravityBody>().SetCurrentAttractor(gameObject.GetComponent<Planet>());
@@ -38,8 +36,5 @@ public class FlockingEnemyGenerator : MonoBehaviour
         return numberOfEnemies;
     }
 
-    public float GetRadius()
-    {
-        return planetRadius;
-    }
+
 }

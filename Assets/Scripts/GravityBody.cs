@@ -8,9 +8,11 @@ public class GravityBody : MonoBehaviour
 
     public float objectMass = 10;
 
+    
+
     void Start()
     {
-        currentPlanet = FindObjectOfType<Planet>();
+        currentPlanet = MainToolbox.planet;
         Rigidbody rigidbody = GetComponent<Rigidbody>();
         rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         rigidbody.useGravity = false;

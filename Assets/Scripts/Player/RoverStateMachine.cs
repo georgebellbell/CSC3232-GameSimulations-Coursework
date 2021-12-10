@@ -45,6 +45,8 @@ public class RoverStateMachine : StateMachine
     public Material defaultMaterial;
     public GameObject roverBody;
 
+    //public Transform planetTransform;
+
     // initialises all the states the player can be in and finds certain variables that will be needed later
     private void Awake()
     {
@@ -61,6 +63,7 @@ public class RoverStateMachine : StateMachine
         pickupGenerator = FindObjectOfType<PickupGenerator>();
         playerHealth = GetComponent<Health>();
         roverBody = GameObject.Find("RoverBody");
+        //planetTransform = FindObjectOfType<Planet>().gameObject.transform;
         defaultMaterial = roverBody.GetComponent<Renderer>().material;
         jumpAnimator = GetComponent<Animator>();
 

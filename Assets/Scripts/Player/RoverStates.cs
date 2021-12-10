@@ -8,6 +8,8 @@ public class RoverStates : BaseState
 {
     private RoverStateMachine rover_sm;
 
+    
+
     public RoverStates(string name, RoverStateMachine stateMachine) : base(name, stateMachine)
     {
         rover_sm = stateMachine;
@@ -19,6 +21,8 @@ public class RoverStates : BaseState
         base.LogicUpdate();
 
         CalculateDirection();
+
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -57,6 +61,19 @@ public class RoverStates : BaseState
             rover_sm.transform.TransformDirection(rover_sm.movementDirection) *
             rover_sm.currentMovementSpeed * Time.fixedDeltaTime);
 
+
+        // FINISH IMPLEMEMTING THIS
+        if(rover_sm.movementDirection.x < 0)
+        {
+            rover_sm.jumpAnimator.SetTrigger("MoveLeft");
+        }
+        else if (rover_sm.movementDirection.x > 0)
+        {
+            rover_sm.jumpAnimator.SetTrigger("MoveRight");
+        }
+        
+        
+
         // if player is about to start jumping, they will jump and then set value to false
         if (rover_sm.startJumping)
         {
@@ -64,17 +81,16 @@ public class RoverStates : BaseState
             rover_sm.rigidbody.AddForce(rover_sm.transform.up * rover_sm.currentJumpPower * Time.deltaTime, ForceMode.Impulse);
         }
 
-        if (rover_sm.isJumping)
+        Vector3 gravityDirection = (rover_sm.transform.position - MainToolbox.planetTransform.position).normalized;
+
+        float dotProduct = Vector3.Dot(gravityDirection, rover_sm.transform.up);
+
+        if (rover_sm.isJumping && dotProduct == 1f)
         {
             rover_sm.jumpAnimator.SetTrigger("JumpHeightReached");
         }
 
 
-    }
-
-    private void StopJumping()
-    {
-       
     }
 
     // when in a rover state, game can be paused and UI appear. Overwritten by MenuState due to it not being needed there
@@ -90,6 +106,7 @@ public class RoverStates : BaseState
         if (collision.gameObject.CompareTag("Planet"))
         {
             rover_sm.isJumping = false;
+            rover_sm.jumpAnimator.SetTrigger("JumpHeightReached");
         }
     }
 

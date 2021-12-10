@@ -9,6 +9,7 @@ TagManager:
   - Meteor
   - Pickup
   - ForceField
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Pickup
   - Meteor
   - ForceField
-  - 
+  - Node
   - 
   - 
   - 

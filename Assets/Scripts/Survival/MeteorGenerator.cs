@@ -12,11 +12,10 @@ public class MeteorGenerator : MonoBehaviour
 
     GameObject[] meteorPool;
 
-    float radius;
 
     private void Awake()
     {
-        radius = GetComponentInChildren<SphereCollider>().radius * transform.GetChild(0).transform.lossyScale.x;
+        
         meteorParent = GameObject.Find("MeteorParent");
         PopulatePool();
     }
@@ -48,7 +47,7 @@ public class MeteorGenerator : MonoBehaviour
         {
             if (meteorPool[i].activeInHierarchy == false)
             {
-                Vector3 pos = UnityEngine.Random.onUnitSphere * radius * 3;
+                Vector3 pos = UnityEngine.Random.onUnitSphere * MainToolbox.planetRadius * 3;
                 meteorPool[i].transform.position = pos;
                 meteorPool[i].SetActive(true);
 

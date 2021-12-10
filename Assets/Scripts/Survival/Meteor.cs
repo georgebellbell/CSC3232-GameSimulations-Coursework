@@ -5,6 +5,9 @@ using UnityEngine;
 public class Meteor : MonoBehaviour
 {
     [SerializeField] GameObject meteorCrater;
+    [SerializeField] AudioClip explosion;
+
+
 
     // Deals with the meteors after their generation and what happens when they collide with objects outside of the player
     private void OnCollisionEnter(Collision other)
@@ -12,7 +15,7 @@ public class Meteor : MonoBehaviour
         if (other.gameObject.CompareTag("Planet"))
         {
             GenerateCrater(other);
-            
+            AudioSource.PlayClipAtPoint(explosion, transform.position);
         }
 
         gameObject.SetActive(false);
@@ -30,7 +33,7 @@ public class Meteor : MonoBehaviour
     // If meteor hits planet, it will instantiate a crater at the point of impact
     private void GenerateCrater(Collision other)
     {
-        float planetRadius = other.gameObject.transform.localScale.x / 2;
+        float planetRadius = MainToolbox.planetRadius;
         Vector3 distance = this.transform.position - other.transform.position;
         distance.Normalize();
         Vector3 impactPoint = other.transform.position + distance * planetRadius;
