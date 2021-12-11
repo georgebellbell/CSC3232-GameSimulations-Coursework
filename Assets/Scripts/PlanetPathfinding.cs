@@ -100,8 +100,8 @@ public class PlanetPathfinding : MonoBehaviour
 
     float CalculateHeuristic(Node n, Vector3 destination)
     {
-        //replace with arc
-        return MainToolbox.CalculateArcLength((n.transform.position - destination).magnitude);
+
+        return MainToolbox.CalculateArcLength(n.transform.position, destination);
     }
 
     bool FindPath(Vector3 startingPos, Vector3 destinationPos)

@@ -10,6 +10,7 @@ TagManager:
   - Pickup
   - ForceField
   - Obstacle
+  - Boid
   layers:
   - Default
   - TransparentFX

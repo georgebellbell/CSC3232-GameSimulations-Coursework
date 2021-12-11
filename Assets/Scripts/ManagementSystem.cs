@@ -16,7 +16,7 @@ public class ManagementSystem : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI nextLevelButton;
 
-
+    string currentPlanet;
     int currentScene;
     int nextScene;
 
@@ -35,6 +35,7 @@ public class ManagementSystem : MonoBehaviour
         winMenu.SetActive(false);
         loseMenu.SetActive(false);
 
+        levelManager = FindObjectOfType<LevelManager>();
         if (FindObjectOfType<Planet>().thisPlanetType == Planet.PlanetType.survival)
         {
             survivalControls.SetActive(true);
@@ -45,7 +46,8 @@ public class ManagementSystem : MonoBehaviour
             puzzleControls.SetActive(true);
         }
         currentScene = SceneManager.GetActiveScene().buildIndex;
-        levelManager = FindObjectOfType<LevelManager>();
+        
+        
         DetermineNextLevel();
     }
 
@@ -64,6 +66,7 @@ public class ManagementSystem : MonoBehaviour
         {
             if (levelsToPlay[i] == currentScene)
             {
+                currentPlanet = levelManager.GetCurrentPlanet(i);
                 Debug.Log(levelsToPlay[i + 1]);
                 nextScene = levelsToPlay[i + 1];
                 return;
@@ -94,8 +97,11 @@ public class ManagementSystem : MonoBehaviour
 
     public void WinGame()
     {
+        
         winMenu.SetActive(true);
         Time.timeScale = 0;
+
+        SavingSystem.SavePlanet(currentPlanet, true);
         
     }
 
@@ -103,9 +109,12 @@ public class ManagementSystem : MonoBehaviour
     // For Survival levels, this is called via the player's Health.CS when player health drops below 0
     public void LoseGame()
     {
+        
         loseMenu.SetActive(true);
         Time.timeScale = 0;
-        
+
+        SavingSystem.SavePlanet(currentPlanet, false);
+
     }
 
     // Brings up Paused UI and stops time in game

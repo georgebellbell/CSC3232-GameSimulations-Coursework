@@ -8,7 +8,8 @@ public class Planet : MonoBehaviour
         survival,
         puzzle,
         menu,
-        smart
+        minmax,
+        boids
     };
 
     [SerializeField] float gravity = -10f;
@@ -29,6 +30,8 @@ public class Planet : MonoBehaviour
         MainToolbox.planetRadius = planetRadius;
         MainToolbox.planetTransform = this.transform;
         MainToolbox.planet = this;
+        MainToolbox.planetCollider = GetComponentInChildren<SphereCollider>();
+        MainToolbox.planetType = thisPlanetType;
     }
     private void Start()
     {
@@ -50,7 +53,7 @@ public class Planet : MonoBehaviour
     {
         if (thisPlanetType == PlanetType.puzzle)
         {
-            //GetComponent<PuzzleMode>().UpdatePuzzlePlanet();
+            GetComponent<PuzzleMode>().UpdatePuzzlePlanet();
         }
     }
     

@@ -11,6 +11,8 @@ public class RoverStateMachine : StateMachine
     public SpeedPowerupState speedPowerupState;
     public PuzzleState puzzleState;
     public MenuState menuState;
+    public BoidsState boidsState;
+    public MinMaxState minMaxState;
 
     public Rigidbody rigidbody;
 
@@ -53,8 +55,10 @@ public class RoverStateMachine : StateMachine
         noPowerupState = new NoPowerupState(this);
         jumpPowerupState = new JumpPowerupState(this);
         speedPowerupState = new SpeedPowerupState(this);
-        puzzleState = new PuzzleState(this);
+        puzzleState = new DefaultPuzzleState(this);
         menuState = new MenuState(this);
+        boidsState = new BoidsState(this);
+        minMaxState = new MinMaxState(this);
        
 
         Time.timeScale = 1;
@@ -77,16 +81,22 @@ public class RoverStateMachine : StateMachine
     {
         Planet currentPlanet = FindObjectOfType<Planet>();
 
-        if (currentPlanet.thisPlanetType == Planet.PlanetType.survival)
+        if (MainToolbox.planetType == Planet.PlanetType.survival)
         {
             return noPowerupState;
         }
-
-        else if (currentPlanet.thisPlanetType == Planet.PlanetType.puzzle)
+        else if (MainToolbox.planetType == Planet.PlanetType.puzzle)
         {
             return puzzleState;
         }
-
+        else if (MainToolbox.planetType == Planet.PlanetType.boids)
+        {
+            return boidsState;
+        }
+        else if (MainToolbox.planetType == Planet.PlanetType.minmax)
+        {
+            return minMaxState;
+        }
         else
         {
             return menuState;

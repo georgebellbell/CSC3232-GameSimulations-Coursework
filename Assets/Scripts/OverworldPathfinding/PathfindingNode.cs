@@ -60,25 +60,7 @@ public class PathfindingNode : MonoBehaviour
         }
     }
 
-    /*
-    void SetupNode()
-    {
-        switch (nodeType)
-        {
-            case NodeType.Passable:
-                traversalCost = 1;
-                break;
-
-            case NodeType.Impassable:
-                traversalCost = -1;
-                break;
-
-            case NodeType.Rough:
-                traversalCost = 2;
-                break;
-        }
-    }
-    */
+    
     public void ToggleNodeType()
     {
         isWanted = !isWanted;

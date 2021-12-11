@@ -5,21 +5,31 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    int[] levelsToPlay;
+    [SerializeField] int[] levelsToPlay;
+
+    [SerializeField] string[] planets;
 
     private void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
     }
 
-    public void SetPlanetPath(int[] planetList)
+    public void SetPlanetPath(int[] planetList, string[] planetNames )
     {
         levelsToPlay = planetList;
+        planets = planetNames; 
+       
+        
     }
 
     public int[] GetPlanetPath()
     {
         return levelsToPlay;
+    }
+
+    public string GetCurrentPlanet(int index)
+    {
+        return planets[index];
     }
 
     

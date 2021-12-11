@@ -9,11 +9,14 @@ public class OverworldPlanet : MonoBehaviour
 
     [SerializeField] int sceneIndex;
 
-    [SerializeField] string planetName;
+    [SerializeField] public string planetName;
     [SerializeField] string planetMass;
     [SerializeField] string planetType;
+    [SerializeField] bool planetCompleted = false;
 
     bool planetSelected = false;
+
+    [SerializeField] bool startNode = false;
 
     OverworldNavigator overworldNavigator;
     GameObject currentOverlay;
@@ -28,12 +31,20 @@ public class OverworldPlanet : MonoBehaviour
         aStar = FindObjectOfType<AStar>();
         overworldNavigator = FindObjectOfType<OverworldNavigator>();
         levelManager = FindObjectOfType<LevelManager>();
+
+        PlanetData data = SavingSystem.LoadPlanet(planetName);
+
+        if (data != null)
+        {
+            planetCompleted = data.planetCompleted;
+        }
+       
     }
 
     // When mouse is over an object, green overlay object appears to highlight and information about it
     private void OnMouseEnter()
     {
-        if (!planetSelected)
+        if (!planetSelected && !startNode)
         {
             currentOverlay = Instantiate(planetSelectedOverlay, transform.position, Quaternion.identity);
             currentOverlay.transform.localScale = this.transform.localScale * 1.2f;
@@ -43,13 +54,13 @@ public class OverworldPlanet : MonoBehaviour
             currentOverlay.GetComponent<Renderer>().material.color = color;
         }
 
-        overworldNavigator.SetPlanetStats(planetName, planetType, planetMass, transform);
+        overworldNavigator.SetPlanetStats(planetName, planetType, planetMass, transform, planetCompleted);
     }
 
     // clears everything made in OnMouseEnter
     private void OnMouseExit()
     {
-        if (!planetSelected)
+        if (!planetSelected && !startNode)
         {
             Destroy(currentOverlay.gameObject);   
         }
@@ -60,7 +71,11 @@ public class OverworldPlanet : MonoBehaviour
     // If player clicks on that planet, the game will load a level
     private void OnMouseUp()
     {
-        ToggleSelectPlanet();
+        if (!startNode)
+        {
+            ToggleSelectPlanet();
+
+        }
         //LoadPlanet();
     }
 
@@ -96,6 +111,16 @@ public class OverworldPlanet : MonoBehaviour
     public int GetPlanetIndex()
     {
         return sceneIndex;
+    }
+
+    public void SetCompletion(bool completed)
+    {
+        planetCompleted = completed;
+    }
+
+    public bool IsCompleted()
+    {
+        return planetCompleted;
     }
 
 

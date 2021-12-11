@@ -21,9 +21,7 @@ public class EnemyPathfinder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = (target.transform.position - transform.position).magnitude;
-
-        float arcDistance = MainToolbox.CalculateArcLength(distance);
+        float arcDistance = MainToolbox.CalculateArcLength(transform.position, target.transform.position);
 
         RecalculatePath();
     }
@@ -59,7 +57,7 @@ public class EnemyPathfinder : MonoBehaviour
             Vector3 startPos = transform.position;
             Vector3 endPos = path[i];
 
-            if (MainToolbox.CalculateArcLength((endPos - startPos).magnitude) < nodeRadius)
+            if (MainToolbox.CalculateArcLength(startPos, endPos) < nodeRadius)
             {
                 endPos = path[i + 1];
             }

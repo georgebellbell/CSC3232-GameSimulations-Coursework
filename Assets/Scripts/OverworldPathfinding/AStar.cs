@@ -10,8 +10,7 @@ public class AStar : MonoBehaviour
 
     [SerializeField] PathfindingNode startPlanet, targetPlanet;
     [SerializeField] float lineWidth;
-    [SerializeField]
-    GameObject[] planets;
+    [SerializeField] GameObject[] planets;
 
     [SerializeField] Button playButton;
 
@@ -20,6 +19,7 @@ public class AStar : MonoBehaviour
 
     List<PathfindingNode> path = new List<PathfindingNode>();
     int[] planetIndexes;
+    [SerializeField]string[] planetNames;
 
     public void SetTarget(PathfindingNode newTarget)
     {
@@ -148,14 +148,18 @@ public class AStar : MonoBehaviour
         Vector3[] positions = new Vector3[path.Count];
         planets = new GameObject[path.Count];
         planetIndexes = new int[path.Count];
+        planetNames = new string[path.Count];
 
         for (int i = 0; i < path.Count; i++)
         {
             positions[i] = path[i].transform.position;
             planets[i] = path[i].gameObject;
             planetIndexes[i] = path[i].gameObject.GetComponent<OverworldPlanet>().GetPlanetIndex();
-
+            planetNames[i] = path[i].gameObject.GetComponent<OverworldPlanet>().planetName;
         }
+
+        System.Array.Reverse(planetIndexes);
+        System.Array.Reverse(planetNames);
 
         lines.positionCount = path.Count;
         lines.SetPositions(positions);
@@ -163,7 +167,8 @@ public class AStar : MonoBehaviour
 
     public void BeginGame()
     {
-        levelManager.SetPlanetPath(planetIndexes);
+        levelManager.SetPlanetPath(planetIndexes, planetNames);
+ 
         SceneManager.LoadScene(planetIndexes[0]);
     }
 }

@@ -14,7 +14,7 @@ public class Timer : MonoBehaviour
     void Start()
     {
         managementSystem = FindObjectOfType<ManagementSystem>();
-        planetType = GetComponent<Planet>().thisPlanetType;
+        planetType = MainToolbox.planetType;
         pickupGenerator = GetComponent<PickupGenerator>();
         timerText.text = "Time left: " + timeToComplete;
         StartCoroutine(Countdown());
@@ -42,7 +42,7 @@ public class Timer : MonoBehaviour
         // Depending on planet state, game will enter a win or lose state when timer runs out
         if (timeToComplete <= 0)
         {
-            if (planetType == Planet.PlanetType.puzzle)
+            if (planetType == Planet.PlanetType.puzzle || planetType == Planet.PlanetType.boids)
             {
                 StartCoroutine(LoseGame());
             }

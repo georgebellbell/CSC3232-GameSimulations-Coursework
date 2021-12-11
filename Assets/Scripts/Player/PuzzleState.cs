@@ -6,7 +6,7 @@ using UnityEngine;
 public class PuzzleState : RoverStates
 {
     private RoverStateMachine rover_sm;
-    public PuzzleState(RoverStateMachine stateMachine) : base("PuzzleState", stateMachine)
+    public PuzzleState(string name, RoverStateMachine stateMachine) : base(name, stateMachine)
     {
         rover_sm = stateMachine;
     }

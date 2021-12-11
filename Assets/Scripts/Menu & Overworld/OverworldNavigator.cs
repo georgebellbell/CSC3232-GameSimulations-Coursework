@@ -12,6 +12,7 @@ public class OverworldNavigator : MonoBehaviour
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI massText;
     [SerializeField] TextMeshProUGUI gameTypeText;
+    [SerializeField] TextMeshProUGUI completedText;
     [SerializeField] GameObject stats;
 
     
@@ -32,15 +33,9 @@ public class OverworldNavigator : MonoBehaviour
 
     LevelManager levelManager;
 
-    class PlanetLinks
-    {
-        GameObject firstPlanet;
-        GameObject secondPlanet;
-        float distanceBetweenPlanets;
-    }
+    
 
-
-        private void Start()
+    private void Start()
     {
         navigationPath = Instantiate(new GameObject());
 
@@ -64,15 +59,15 @@ public class OverworldNavigator : MonoBehaviour
 
         // Player can drag across overworld while mousewheel is clicked
         // Limited within a certain range to prevent player getting lost
-        if (Input.GetKey(KeyCode.Mouse2))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            xChange = Mathf.Clamp(originalPosition.x - Input.GetAxisRaw("Mouse X"), -10, 10);
-            zChange = Mathf.Clamp(originalPosition.z - Input.GetAxisRaw("Mouse Y"), -4, 4);
+            xChange = Mathf.Clamp(originalPosition.x - Input.GetAxisRaw("Mouse X"), -15, 15);
+            zChange = Mathf.Clamp(originalPosition.z - Input.GetAxisRaw("Mouse Y"), -8, 8);
         }
 
         // Scrolling mousewheel will move camera closer or further away
         // Clamped within certain range so player can't zoom in or out too much
-        yChange = Mathf.Clamp(-Input.GetAxisRaw("Mouse ScrollWheel") + originalPosition.y, 5, 10);
+        yChange = Mathf.Clamp(-Input.GetAxisRaw("Mouse ScrollWheel") + originalPosition.y, 20, 40);
         Vector3 newPosition = new Vector3(xChange, yChange, zChange);
 
         camera.transform.position = newPosition;
@@ -80,12 +75,12 @@ public class OverworldNavigator : MonoBehaviour
 
     // Called via OverworldPlanet.cs and will show some information about that planet
     // and enable an aspect of UI that is translated to that position on the screen
-    public void SetPlanetStats(string planetName, string planetType, string planetMass, Transform transform)
+    public void SetPlanetStats(string planetName, string planetType, string planetMass, Transform transform, bool isCompleted)
     {
         nameText.text = planetName;
         massText.text = planetMass;
         gameTypeText.text = planetType;
-
+        completedText.enabled = isCompleted;
         selectedCanvas.SetActive(true);
 
         Vector2 screenPos = Camera.main.WorldToScreenPoint(transform.position);
@@ -100,7 +95,6 @@ public class OverworldNavigator : MonoBehaviour
         nameText.text = "";
         massText.text = "";
         gameTypeText.text = "";
-
         selectedCanvas.SetActive(false);
     }
 

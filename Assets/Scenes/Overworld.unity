@@ -292,6 +292,7 @@ MonoBehaviour:
   nameText: {fileID: 578856169}
   massText: {fileID: 1255937302}
   gameTypeText: {fileID: 1818856976}
+  completedText: {fileID: 1688896833}
   stats: {fileID: 1977898775}
   camera: {fileID: 794119964}
   lineMaterial: {fileID: 2100000, guid: b4fa91a7f9820a7478e9055a72ab6528, type: 2}
@@ -427,6 +428,7 @@ MonoBehaviour:
   lineWidth: 0.3
   planets: []
   playButton: {fileID: 145006577}
+  planetNames: []
 --- !u!1 &145006576
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +760,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352834183}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.3, y: 0, z: 20.09}
+  m_LocalPosition: {x: 7.3, y: 0, z: 19.9}
   m_LocalScale: {x: 5.3156962, y: 5.3156962, z: 5.3156962}
   m_Children: []
   m_Father: {fileID: 266727403}
@@ -780,7 +782,9 @@ MonoBehaviour:
   sceneIndex: 6
   planetName: SmartPlanet
   planetMass: 160
-  planetType: Smart
+  planetType: Boid
+  planetCompleted: 0
+  startNode: 0
 --- !u!135 &352834186
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -892,7 +896,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505705499}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.46, y: 0, z: -0.89}
+  m_LocalPosition: {x: -0.57, y: 0, z: -0.3}
   m_LocalScale: {x: 1.36, y: 1.36, z: 1.36}
   m_Children: []
   m_Father: {fileID: 266727403}
@@ -912,9 +916,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetSelectedOverlay: {fileID: 1402517571975226217, guid: 00b496f97532b814d8244ca8f60a6bb3, type: 3}
   sceneIndex: 2
-  planetName: 18 Delphini b
+  planetName: Delphinib
   planetMass: 160
   planetType: Survival
+  planetCompleted: 0
+  startNode: 1
 --- !u!135 &505705502
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1026,7 +1032,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534738209}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.43, y: 0, z: 0.54}
+  m_LocalPosition: {x: 21.4, y: 0, z: 12}
   m_LocalScale: {x: 1.36, y: 1.36, z: 1.36}
   m_Children: []
   m_Father: {fileID: 266727403}
@@ -1049,6 +1055,8 @@ MonoBehaviour:
   planetName: 42 Draconis b
   planetMass: 100
   planetType: Puzzle
+  planetCompleted: 0
+  startNode: 0
 --- !u!135 &534738212
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1428,7 +1436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715206116}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.59, y: 0, z: 6.79}
+  m_LocalPosition: {x: -1, y: 0, z: 9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 266727403}
@@ -1451,6 +1459,8 @@ MonoBehaviour:
   planetName: 42 Draconis a
   planetMass: 80
   planetType: Puzzle
+  planetCompleted: 0
+  startNode: 0
 --- !u!135 &715206119
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1531,7 +1541,7 @@ MonoBehaviour:
   g: 0
   h: 0
   parent: {fileID: 0}
-  edgeRange: 8.33
+  edgeRange: 17.56
   isWanted: 1
 --- !u!1 &794119964
 GameObject:
@@ -1610,7 +1620,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794119964}
   m_LocalRotation: {x: 0.70710677, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.49, y: 23.62, z: 8.17}
+  m_LocalPosition: {x: -1.49, y: 39, z: 8.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1801,6 +1811,8 @@ MonoBehaviour:
   planetName: 89 Shaggi f
   planetMass: 300
   planetType: Survival
+  planetCompleted: 0
+  startNode: 0
 --- !u!135 &1121186221
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2252,6 +2264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a1326bdf04a4d4596e3564c57a078c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelsToPlay: 
+  planets: []
 --- !u!4 &1472208983
 Transform:
   m_ObjectHideFlags: 0
@@ -2266,6 +2280,140 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1688896830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1688896831}
+  - component: {fileID: 1688896832}
+  - component: {fileID: 1688896833}
+  m_Layer: 5
+  m_Name: Level Completed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1688896831
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688896830}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.3569, y: 0.3569, z: 0.3569}
+  m_Children: []
+  m_Father: {fileID: 1977898776}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 89.958, y: 134.84}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1688896832
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688896830}
+  m_CullTransparentMesh: 1
+--- !u!114 &1688896833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688896830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: LEVEL COMPLETED
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278243604
+  m_fontColor: {r: 0.07696708, g: 0.8207547, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 29
+  m_fontSizeBase: 24.2
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: -105.66725, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1818856974
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,6 +2816,7 @@ RectTransform:
   - {fileID: 2013769238}
   - {fileID: 1255937301}
   - {fileID: 1818856975}
+  - {fileID: 1688896831}
   m_Father: {fileID: 1858673035}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
