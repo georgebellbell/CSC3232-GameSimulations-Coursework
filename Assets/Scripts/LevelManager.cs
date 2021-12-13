@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+// This class acts similar to that of the Design Pattern of Singleton in that there will only ever exist one in the world and it stores key values between scenes
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] int[] levelsToPlay;
@@ -18,9 +16,7 @@ public class LevelManager : MonoBehaviour
     public void SetPlanetPath(int[] planetList, string[] planetNames )
     {
         levelsToPlay = planetList;
-        planets = planetNames; 
-       
-        
+        planets = planetNames;   
     }
 
     public int[] GetPlanetPath()

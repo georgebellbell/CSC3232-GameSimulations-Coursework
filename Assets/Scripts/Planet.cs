@@ -1,6 +1,4 @@
 using UnityEngine;
-
-
 public class Planet : MonoBehaviour
 {
     public enum PlanetType
@@ -22,10 +20,9 @@ public class Planet : MonoBehaviour
 
     public float planetRadius;
 
-    
-
     private void Awake()
     {
+        // On awake, a lot of the values of the planet are saved to the main toolbox
         planetRadius = GetComponentInChildren<SphereCollider>().radius * transform.GetChild(0).transform.lossyScale.x;
         MainToolbox.planetRadius = planetRadius;
         MainToolbox.planetTransform = this.transform;
@@ -33,30 +30,7 @@ public class Planet : MonoBehaviour
         MainToolbox.planetCollider = GetComponentInChildren<SphereCollider>();
         MainToolbox.planetType = thisPlanetType;
     }
-    private void Start()
-    {
-        
-
-        if (thisPlanetType == PlanetType.survival)
-        {
-            GetComponent<MeteorGenerator>().StartMeteors();
-            GetComponent<PickupGenerator>().StartPickups();
-        }
-        else if (thisPlanetType == PlanetType.puzzle)
-        {
-            GetComponent<PuzzleMode>().StartPuzzle();
-        }
-    }
-
-
-    private void Update()
-    {
-        if (thisPlanetType == PlanetType.puzzle)
-        {
-            GetComponent<PuzzleMode>().UpdatePuzzlePlanet();
-        }
-    }
-    
+   
 
     // Referenced by GravityBody.cs and pulls the object towards the transform of
     // the object this is attached to, i.e the center of the planet

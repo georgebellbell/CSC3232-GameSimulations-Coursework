@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public static class MainToolbox // TO BE IMPLEMENTED
+// Another design pattern I implemented was a Toolbox to keep values I repeatedly use, mostly things to do with the planet
+public static class MainToolbox
 {
     public static Planet planet;
     public static float planetRadius;

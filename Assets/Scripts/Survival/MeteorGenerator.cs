@@ -1,13 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
+// For Meteor Generation I implemented the design pattern of an open list to generate a set amount of meteors and then reuse them
 public class MeteorGenerator : MonoBehaviour
 {
     [SerializeField] float spawnRate = 0.5f;
     [SerializeField] GameObject meteorPrefab;
-
     [SerializeField] GameObject meteorParent;
-
     [SerializeField, Range(0, 25)] int poolSize = 5; 
 
     GameObject[] meteorPool;
@@ -21,13 +20,13 @@ public class MeteorGenerator : MonoBehaviour
     }
 
     // When game starts, SpawnMeteor Coroutine will start
-    public void StartMeteors()
+    public void Start()
     {
-        
-        
+
         StartCoroutine(SpawnMeteor());
     }
-
+    
+    // creates the initial pool of meteors
     void PopulatePool()
     {
         meteorPool = new GameObject[poolSize];
@@ -39,6 +38,19 @@ public class MeteorGenerator : MonoBehaviour
             meteorPool[i].SetActive(false);
 
         }
+    }
+
+    // loops through list of meteors and enables the ones that are not already active, depending on spawn rate
+
+    IEnumerator SpawnMeteor()
+    {
+        while (true)
+        {
+
+            EnableMeteorInPool();
+            yield return new WaitForSeconds(spawnRate);
+        }
+
     }
 
     void EnableMeteorInPool()
@@ -56,16 +68,7 @@ public class MeteorGenerator : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnMeteor()
-    {
-        while (true)
-        {
-
-            EnableMeteorInPool();
-            yield return new WaitForSeconds(spawnRate);
-        }
-        
-    }
+    
 
    
 }

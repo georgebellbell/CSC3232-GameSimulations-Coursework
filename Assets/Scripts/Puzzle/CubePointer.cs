@@ -23,7 +23,6 @@ public class CubePointer : MonoBehaviour
 
     }
 
-
     void Update()
     {
         CalculateNearestPoint();

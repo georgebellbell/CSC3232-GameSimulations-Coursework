@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+// Basic state for the puzzle gamemode planets
 public class DefaultPuzzleState : PuzzleState
 {
     private RoverStateMachine rover_sm;

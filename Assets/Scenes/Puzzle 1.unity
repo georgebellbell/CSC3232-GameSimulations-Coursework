@@ -1042,7 +1042,7 @@ PrefabInstance:
       objectReference: {fileID: 1158249398}
     - target: {fileID: 2435398706462219303, guid: 93c963b9887e0794d881e8f022954003, type: 3}
       propertyPath: timeToComplete
-      value: 500
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2435398706633351543, guid: 93c963b9887e0794d881e8f022954003, type: 3}
       propertyPath: hotColor.b
@@ -1127,7 +1127,7 @@ PrefabInstance:
     - target: {fileID: 7156372000863942246, guid: 93c963b9887e0794d881e8f022954003, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 13400000, guid: 4f26653257d4e5c41af2a132f932c38f, type: 2}
     - target: {fileID: 7156372000863942247, guid: 93c963b9887e0794d881e8f022954003, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

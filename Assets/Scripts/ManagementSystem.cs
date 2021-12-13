@@ -54,7 +54,6 @@ public class ManagementSystem : MonoBehaviour
     private void DetermineNextLevel()
     {
         int[] levelsToPlay = levelManager.GetPlanetPath();
-        //Debug.Log(levelsToPlay.Count);
         if (levelsToPlay[levelsToPlay.Length - 1] == currentScene)
         {
             currentPlanet = levelManager.GetCurrentPlanet(levelsToPlay.Length - 1);
@@ -94,19 +93,22 @@ public class ManagementSystem : MonoBehaviour
 
     // For Puzzle levels, this function is called via PuzzlePlanet.CS when all points are activated
     // For Survival levels, this function is called via Timer.CS when the timer finishes
+    // For Boid levels, this function is called when all Boids have been destroyed
+    // For Pathfinding levels this is called when all coins have been collected
 
     public void WinGame()
     {
         
         winMenu.SetActive(true);
         Time.timeScale = 0;
-        Debug.Log(currentPlanet);
+
+        // if the player beats a level, this state for that planet is saved using SavingSystem
         SavingSystem.SavePlanet(currentPlanet, true);
         
     }
 
-    // For Puzzle levels, this is called via Timer.CS when timer runs out before all points are activated
-    // For Survival levels, this is called via the player's Health.CS when player health drops below 0
+    // For Puzzle and Boid levels, this is called via Timer.CS when timer runs out before all points are activated
+    // For Survival and Pathfinding levels, this is called via the player's Health.CS when player health drops below 0
     public void LoseGame()
     {
         

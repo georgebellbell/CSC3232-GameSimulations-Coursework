@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+
+// Meteor included a particle system I made that gives the effect of a meteor trail
 public class Meteor : MonoBehaviour
 {
     [SerializeField] GameObject meteorCrater;
@@ -15,8 +17,6 @@ public class Meteor : MonoBehaviour
         }
         ExplodeMeteor();
     }
-    
-    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -26,12 +26,16 @@ public class Meteor : MonoBehaviour
             ExplodeMeteor();
         }   
     }
+
+    // upon colliding with something, an explosion sound effect is created at location of meteor before it is deactivated
     void ExplodeMeteor()
     {
         AudioSource.PlayClipAtPoint(explosion, transform.position);
-
         gameObject.SetActive(false);
     }
+
+    // For part 2, I have some particle systems attached to the meteor crater, one of which only plays on awake, i.e. when meteor impacts, creating an explosion effect
+    // in addition there is a looping effect of smoke for the meteors which adds an element of difficulty to the later parts of the level where player cannot see as well
 
     // If meteor hits planet, it will instantiate a crater at the point of impact
     private void GenerateCrater(Collision other)

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
+using System.Collections;
 
 public class PuzzleMode : MonoBehaviour
 {
@@ -29,7 +29,7 @@ public class PuzzleMode : MonoBehaviour
 
     float excludeRange;
 
-    public void StartPuzzle()
+    public void Start()
     {
         managementSystem = FindObjectOfType<ManagementSystem>();
         planetCollider = GetComponentInChildren<SphereCollider>();
@@ -45,7 +45,7 @@ public class PuzzleMode : MonoBehaviour
         InitialiseTemperatureChangeValues();
     }
 
-    public void UpdatePuzzlePlanet()
+    public void Update()
     {
         ReducePlanetTemperature();
     }
@@ -103,8 +103,15 @@ public class PuzzleMode : MonoBehaviour
 
         if (numberOfActivePoints == totalNumberOfPoints)
         {
-            managementSystem.WinGame();
+            StartCoroutine(Win());
+            
         }
+    }
+
+    IEnumerator Win()
+    {
+        yield return new WaitForSeconds(0.5f);
+        managementSystem.WinGame();
     }
 
     // Position of points and objects created with an element of randomness

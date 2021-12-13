@@ -32,15 +32,14 @@ public class SpeedPowerupState : PowerupState
        
     }
 
+    // Uses an animation effect for the rover to increase and decrease its size in a smooth fashion
     private void IncreaseSize()
-    {
-        //rover_sm.transform.localScale = rover_sm.transform.localScale  * 2;
+    { 
         rover_sm.roverAnimator.SetTrigger("IncreaseSize");
     }
 
     private void ReduceSize()
     {
-        //rover_sm.transform.localScale = rover_sm.transform.localScale * 0.5f;
         rover_sm.roverAnimator.SetTrigger("DecreaseSize");
     }
 

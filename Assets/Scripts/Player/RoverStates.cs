@@ -8,8 +8,6 @@ public class RoverStates : BaseState
 {
     private RoverStateMachine rover_sm;
 
-    
-
     public RoverStates(string name, RoverStateMachine stateMachine) : base(name, stateMachine)
     {
         rover_sm = stateMachine;
@@ -21,8 +19,6 @@ public class RoverStates : BaseState
         base.LogicUpdate();
 
         CalculateDirection();
-
-
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -49,6 +45,8 @@ public class RoverStates : BaseState
         {
             rover_sm.isJumping = true;
             rover_sm.startJumping = true;
+
+            // Added a special effect and sound for the rover jumping in the form of an animation and and a boing sound effect that plays at the rover's location
             rover_sm.roverAnimator.SetTrigger("StartJumping");
             AudioSource.PlayClipAtPoint(rover_sm.jumpSound, rover_sm.transform.position);
         }
@@ -63,7 +61,7 @@ public class RoverStates : BaseState
             rover_sm.currentMovementSpeed * Time.fixedDeltaTime);
 
 
-        // FINISH IMPLEMEMTING THIS
+        // implemented an animation effect where the wheels will turn with the direction the rover is moving in
         if(rover_sm.movementDirection.x < 0)
         {
             rover_sm.roverAnimator.SetTrigger("MoveLeft");
@@ -90,6 +88,7 @@ public class RoverStates : BaseState
 
         float dotProduct = Vector3.Dot(gravityDirection, rover_sm.transform.up);
 
+        // if the rover has reached max height, new animation effect will play that returns it to its default size
         if (rover_sm.isJumping && dotProduct == 1f)
         {
             rover_sm.roverAnimator.SetTrigger("JumpHeightReached");

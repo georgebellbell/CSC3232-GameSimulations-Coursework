@@ -24,7 +24,7 @@ public class PickupGenerator : MonoBehaviour
 
     GameObject pickupParent;
     
-    public void StartPickups()
+    public void Start()
     {
         pickupParent = GameObject.Find("PickupParent");
         GenerateProbabilities();

@@ -29,6 +29,8 @@ public class DeliveryPoint : MonoBehaviour
     {
         renderer.material.color = hasObjectColour;
         objectDelivered = true;
+
+        // upon delivering an object to the delivery point, a particle system effect will play as well as a sound effect
         confettiPS.Play();
         AudioSource.PlayClipAtPoint(completedSoundEffect, transform.position);
         puzzleMode.CheckAllPointsCovered(); 

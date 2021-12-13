@@ -1,11 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
-using System;
-using UnityEngine.UI;
 
-// Will be developed in part 2 to include pathfinding to create path of planets
 public class OverworldNavigator : MonoBehaviour
 {
     [SerializeField] GameObject selectedCanvas;
@@ -100,6 +96,7 @@ public class OverworldNavigator : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    // Attached to button on UI to reset state of planets through the saving system
     public void ResetProgress()
     {
         OverworldPlanet[] planets;
