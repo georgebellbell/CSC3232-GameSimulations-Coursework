@@ -35,6 +35,7 @@ public class AStar : MonoBehaviour
     {
         if (FindPath())
         {
+            lines.enabled = true;
             BuildPath();
             playButton.gameObject.SetActive(true);
         }
@@ -42,6 +43,7 @@ public class AStar : MonoBehaviour
         {
             playButton.gameObject.SetActive(false);
             lines.positionCount = 0;
+            
             Debug.Log("NO VALID PATH");
         }
     }
@@ -55,7 +57,7 @@ public class AStar : MonoBehaviour
     private void Start()
     {
         levelManager = FindObjectOfType<LevelManager>();
-
+        lines.enabled = false;
         lines.startWidth = lineWidth;
         lines.endWidth = lineWidth;
     }
@@ -171,4 +173,6 @@ public class AStar : MonoBehaviour
  
         SceneManager.LoadScene(planetIndexes[0]);
     }
+
+    
 }

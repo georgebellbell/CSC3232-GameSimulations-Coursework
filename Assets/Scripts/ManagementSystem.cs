@@ -57,17 +57,17 @@ public class ManagementSystem : MonoBehaviour
         //Debug.Log(levelsToPlay.Count);
         if (levelsToPlay[levelsToPlay.Length - 1] == currentScene)
         {
+            currentPlanet = levelManager.GetCurrentPlanet(levelsToPlay.Length - 1);
             nextLevelButton.text = "Return to menu";
             nextScene = 1;
             return;
         }
 
-        for (int i = 0; i < levelsToPlay.Length; i++)
+        for (int i = 0; i < levelsToPlay.Length -1; i++)
         {
             if (levelsToPlay[i] == currentScene)
             {
                 currentPlanet = levelManager.GetCurrentPlanet(i);
-                Debug.Log(levelsToPlay[i + 1]);
                 nextScene = levelsToPlay[i + 1];
                 return;
             }
@@ -100,7 +100,7 @@ public class ManagementSystem : MonoBehaviour
         
         winMenu.SetActive(true);
         Time.timeScale = 0;
-
+        Debug.Log(currentPlanet);
         SavingSystem.SavePlanet(currentPlanet, true);
         
     }

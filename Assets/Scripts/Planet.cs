@@ -8,7 +8,7 @@ public class Planet : MonoBehaviour
         survival,
         puzzle,
         menu,
-        minmax,
+        coin,
         boids
     };
 

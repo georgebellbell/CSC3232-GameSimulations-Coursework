@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class FlockingEnemy : MonoBehaviour
 {
-    
-    
     Rigidbody rb;
     Vector3 movementDirection;
     [SerializeField] float movementSpeed = 5;
@@ -42,6 +40,14 @@ public class FlockingEnemy : MonoBehaviour
     void Update()
     {
         movementDirection = FlockingBehaviour();
+
+        float distance = Vector3.Distance(this.transform.position, MainToolbox.planetTransform.position);
+        if (distance >= MainToolbox.planetRadius * 1.5)
+        {
+            GameObject.FindObjectOfType<FlockingEnemyGenerator>().RemoveBoid(this);
+            GameObject.Destroy(this.gameObject);
+        }
+        
     }
 
     private void FixedUpdate()

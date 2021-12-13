@@ -57,13 +57,21 @@ public class Timer : MonoBehaviour
         }
     }
 
-    // Death state is a coroutine that will be developed in part 2
+ 
     IEnumerator LoseGame()
     {
-        // death animation
-        // death sound
-        FindObjectOfType<RoverStateMachine>().enabled = false;
-        yield return new WaitForSeconds(1f);
+        RoverStateMachine rover_sm = FindObjectOfType<RoverStateMachine>();
+        rover_sm.explosionPS.Play();
+        AudioSource.PlayClipAtPoint(rover_sm.explosionSound, transform.position);
+        rover_sm.enabled = false;
+
+        RoverPart[] parts = FindObjectsOfType<RoverPart>();
+
+        foreach (RoverPart part in parts)
+        {
+            part.gameObject.SetActive(false);
+        }
+        yield return new WaitForSeconds(2f);
         FindObjectOfType<ManagementSystem>().LoseGame();
 
     }

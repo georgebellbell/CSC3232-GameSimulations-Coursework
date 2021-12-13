@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] Image healthBarImage;
-   
+
     float health;
     float maxHealth = 100;
 
@@ -64,12 +64,16 @@ public class Health : MonoBehaviour
     }
 
     // Called in OnChildCollisionEnter via specific hit collision with rover (player) individual parts
-    void TakeDamage(float damagePoints)
+    public void TakeDamage(float damagePoints)
     {
-        // if player takes damage the probability of each of the pickups spawning is increased
-        pickupGenerator.ChangeHealthChance(3);
-        pickupGenerator.ChangeJumpChance(0.5);
-        pickupGenerator.ChangeSpeedChance(0.4);
+        if (MainToolbox.planetType == Planet.PlanetType.survival)
+        {
+            // if player takes damage the probability of each of the pickups spawning is increased
+            pickupGenerator.ChangeHealthChance(3);
+            pickupGenerator.ChangeJumpChance(0.5);
+            pickupGenerator.ChangeSpeedChance(0.4);
+        }
+        
 
         // if player health is above 0, damage will be taken, but minimum the health can go to is 0
         if (health > 0)
@@ -89,8 +93,19 @@ public class Health : MonoBehaviour
     // these aesthetic elements will be implemented during part 2
     IEnumerator LoseGame()
     {
-        GetComponent<RoverStateMachine>().enabled = false;
-        yield return new WaitForSeconds(1f);
+        RoverStateMachine rover_sm = GetComponent<RoverStateMachine>();
+        rover_sm.explosionPS.Play();
+        AudioSource.PlayClipAtPoint(rover_sm.explosionSound, transform.position);
+        rover_sm.enabled = false;
+
+        RoverPart[] parts = FindObjectsOfType<RoverPart>();
+
+        foreach (RoverPart part in parts)
+        {
+            part.gameObject.SetActive(false);
+        }
+
+        yield return new WaitForSeconds(2f);
         FindObjectOfType<ManagementSystem>().LoseGame();
 
     }

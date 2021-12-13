@@ -11,6 +11,7 @@ TagManager:
   - ForceField
   - Obstacle
   - Boid
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - Meteor
   - ForceField
   - Node
-  - 
-  - 
+  - Coin
+  - Enemy
   - 
   - 
   - 

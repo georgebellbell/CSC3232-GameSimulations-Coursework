@@ -13,19 +13,13 @@ public class OverworldNavigator : MonoBehaviour
     [SerializeField] TextMeshProUGUI massText;
     [SerializeField] TextMeshProUGUI gameTypeText;
     [SerializeField] TextMeshProUGUI completedText;
+    [SerializeField] TextMeshProUGUI lockedText;
+
     [SerializeField] GameObject stats;
-
-    
-
     [SerializeField] GameObject camera;
 
-    GameObject navigationPath;
-    LineRenderer lineRenderer;
-    [SerializeField] Material lineMaterial;
-    [SerializeField] float lineWidth;
+    GameObject levelManagerObject;
 
-    List<int> planetIndexes = new List<int>();
-    List<OverworldPlanet> planets = new List<OverworldPlanet>();
 
     float yChange;
     float xChange;
@@ -37,14 +31,15 @@ public class OverworldNavigator : MonoBehaviour
 
     private void Start()
     {
-        navigationPath = Instantiate(new GameObject());
-
-        lineRenderer = navigationPath.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = lineWidth;
-        lineRenderer.endWidth = lineWidth;
-        lineRenderer.material = lineMaterial;
-
         levelManager = FindObjectOfType<LevelManager>();
+        if (levelManager == null)
+        {
+            levelManagerObject = Instantiate(new GameObject());
+            levelManagerObject.AddComponent<LevelManager>();
+            levelManagerObject.name = "Level Manager";
+            levelManager = levelManagerObject.GetComponent<LevelManager>();
+        }
+
     }
     private void Update()
     {
@@ -62,7 +57,7 @@ public class OverworldNavigator : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0))
         {
             xChange = Mathf.Clamp(originalPosition.x - Input.GetAxisRaw("Mouse X"), -15, 15);
-            zChange = Mathf.Clamp(originalPosition.z - Input.GetAxisRaw("Mouse Y"), -8, 8);
+            zChange = Mathf.Clamp(originalPosition.z - Input.GetAxisRaw("Mouse Y"), -15, 15);
         }
 
         // Scrolling mousewheel will move camera closer or further away
@@ -75,12 +70,13 @@ public class OverworldNavigator : MonoBehaviour
 
     // Called via OverworldPlanet.cs and will show some information about that planet
     // and enable an aspect of UI that is translated to that position on the screen
-    public void SetPlanetStats(string planetName, string planetType, string planetMass, Transform transform, bool isCompleted)
+    public void SetPlanetStats(string planetName, string planetType, string planetMass, Transform transform, bool isCompleted, bool isUnlocked)
     {
         nameText.text = planetName;
         massText.text = planetMass;
         gameTypeText.text = planetType;
         completedText.enabled = isCompleted;
+        lockedText.enabled = isUnlocked;
         selectedCanvas.SetActive(true);
 
         Vector2 screenPos = Camera.main.WorldToScreenPoint(transform.position);
@@ -104,50 +100,19 @@ public class OverworldNavigator : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void NewPlanetAdded(OverworldPlanet newPlanet)
+    public void ResetProgress()
     {
-
-        int newPlanetIndex = newPlanet.GetPlanetIndex();
-
-        if (planetIndexes.Capacity != 0)
+        OverworldPlanet[] planets;
+        planets = FindObjectsOfType<OverworldPlanet>();
+        foreach (OverworldPlanet planet in planets)
         {
-            foreach (int planetIndex in planetIndexes)
-            {
-                if (planetIndex == newPlanetIndex)
-                {
-                    Debug.Log(planetIndex);
-                    planetIndexes.Remove(planetIndex);
-                    planets.Remove(newPlanet);
-                    CheckNumberOfSelectedPlanets();
-                    
-                    return;
-                }
-            }
+            SavingSystem.SavePlanet(planet.planetName, false);
         }
+        SceneManager.LoadScene(1);
 
-        planetIndexes.Add(newPlanetIndex);
-        planets.Add(newPlanet);
 
-        CheckNumberOfSelectedPlanets();
     }
 
-    private void CheckNumberOfSelectedPlanets()
-    {
-       
-        
-            
-        lineRenderer.positionCount = planets.Count;
-        for (int i = 1; i < planets.Count; i++)
-        {
-            Debug.Log(planets[i].transform.position);
-            lineRenderer.SetPosition(i, planets[i].transform.position);
-            lineRenderer.SetPosition(i - 1, planets[i - 1].transform.position);
-        }
 
-        bool enoughLevelsSelected = planetIndexes.Count >= 2;
-        
-        
-    }
 
-    
 }

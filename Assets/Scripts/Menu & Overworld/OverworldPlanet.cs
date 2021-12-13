@@ -23,28 +23,48 @@ public class OverworldPlanet : MonoBehaviour
     PathfindingNode planetNode;
     AStar aStar;
 
-    LevelManager levelManager;
+    [SerializeField] OverworldPlanet[] prerequesitPlanets;
 
-    private void Start()
+    [SerializeField] bool planetUnlocked;
+
+    
+
+    private void Awake()
     {
         planetNode = GetComponent<PathfindingNode>();
         aStar = FindObjectOfType<AStar>();
         overworldNavigator = FindObjectOfType<OverworldNavigator>();
-        levelManager = FindObjectOfType<LevelManager>();
-
         PlanetData data = SavingSystem.LoadPlanet(planetName);
 
         if (data != null)
         {
             planetCompleted = data.planetCompleted;
         }
+
+        
        
+    }
+
+    private void Start()
+    {
+        if (prerequesitPlanets.Length > 0)
+        {
+            foreach (OverworldPlanet item in prerequesitPlanets)
+            {
+                if(item.IsCompleted() == false)
+                {
+                    return;
+                }
+            }     
+        }
+
+        planetUnlocked = true;
     }
 
     // When mouse is over an object, green overlay object appears to highlight and information about it
     private void OnMouseEnter()
     {
-        if (!planetSelected && !startNode)
+        if (!planetSelected && !startNode && planetUnlocked)
         {
             currentOverlay = Instantiate(planetSelectedOverlay, transform.position, Quaternion.identity);
             currentOverlay.transform.localScale = this.transform.localScale * 1.2f;
@@ -54,13 +74,13 @@ public class OverworldPlanet : MonoBehaviour
             currentOverlay.GetComponent<Renderer>().material.color = color;
         }
 
-        overworldNavigator.SetPlanetStats(planetName, planetType, planetMass, transform, planetCompleted);
+        overworldNavigator.SetPlanetStats(planetName, planetType, planetMass, transform, planetCompleted, !planetUnlocked);
     }
 
     // clears everything made in OnMouseEnter
     private void OnMouseExit()
     {
-        if (!planetSelected && !startNode)
+        if (!planetSelected && !startNode && planetUnlocked)
         {
             Destroy(currentOverlay.gameObject);   
         }
@@ -71,7 +91,7 @@ public class OverworldPlanet : MonoBehaviour
     // If player clicks on that planet, the game will load a level
     private void OnMouseUp()
     {
-        if (!startNode)
+        if (planetUnlocked)
         {
             ToggleSelectPlanet();
 

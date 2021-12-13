@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using System.Collections;
 public class Meteor : MonoBehaviour
 {
     [SerializeField] GameObject meteorCrater;
     [SerializeField] AudioClip explosion;
-
-
 
     // Deals with the meteors after their generation and what happens when they collide with objects outside of the player
     private void OnCollisionEnter(Collision other)
@@ -15,19 +11,26 @@ public class Meteor : MonoBehaviour
         if (other.gameObject.CompareTag("Planet"))
         {
             GenerateCrater(other);
-            AudioSource.PlayClipAtPoint(explosion, transform.position);
-        }
 
-        gameObject.SetActive(false);
+        }
+        ExplodeMeteor();
     }
+    
+    
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Crater"))
         {
             GenerateLargerCrater(other);
-            gameObject.SetActive(false);
+            ExplodeMeteor();
         }   
+    }
+    void ExplodeMeteor()
+    {
+        AudioSource.PlayClipAtPoint(explosion, transform.position);
+
+        gameObject.SetActive(false);
     }
 
     // If meteor hits planet, it will instantiate a crater at the point of impact

@@ -174,18 +174,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 766563291775262384, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
-      propertyPath: m_Size.y
-      value: 0.7538253
-      objectReference: {fileID: 0}
-    - target: {fileID: 766563291775262384, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
-      propertyPath: m_Center.y
-      value: -0.57316494
-      objectReference: {fileID: 0}
-    - target: {fileID: 1745745116330723898, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
-      propertyPath: DefaultMovementSpeed
-      value: 9.24
-      objectReference: {fileID: 0}
     - target: {fileID: 4687010748723577229, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
       propertyPath: m_Name
       value: Rover
@@ -748,8 +736,16 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1811819511, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
+      propertyPath: poolSize
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811819511, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811819511, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
+      propertyPath: spawnRate
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1844865952, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: timerText
@@ -761,7 +757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1844865952, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: timeToComplete
-      value: 120
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4799935960745624032, guid: 35c5b745aed232e41833e90f262f9252, type: 3}
       propertyPath: m_Materials.Array.data[0]

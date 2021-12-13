@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
         DontDestroyOnLoad(transform.gameObject);
     }
 
+    
     public void SetPlanetPath(int[] planetList, string[] planetNames )
     {
         levelsToPlay = planetList;

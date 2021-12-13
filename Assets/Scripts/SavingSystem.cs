@@ -6,7 +6,6 @@ public static class SavingSystem
 {
     public static void SavePlanet (string planet, bool isCompleted)
     {
-        Debug.Log(planet + " accomplished: " + isCompleted);
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/" + planet + ".data";
         FileStream stream = new FileStream(path, FileMode.Create);
@@ -38,4 +37,6 @@ public static class SavingSystem
             return null;
         }
     }
+
+   
 }

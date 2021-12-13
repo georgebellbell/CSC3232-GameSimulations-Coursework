@@ -115,4 +115,5 @@ MonoBehaviour:
   h: 0
   parent: {fileID: 0}
   detectRadius: 1
-  isObstacleRadius: 0.3
+  isObstacleRadius: 0.6
+  nodeType: 0

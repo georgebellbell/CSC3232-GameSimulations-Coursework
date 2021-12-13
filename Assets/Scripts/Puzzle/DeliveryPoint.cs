@@ -7,7 +7,9 @@ public class DeliveryPoint : MonoBehaviour
 {
     [SerializeField] Color noObjectColour;
     [SerializeField] Color hasObjectColour;
-    
+    [SerializeField] ParticleSystem confettiPS;
+    [SerializeField] AudioClip completedSoundEffect;
+
     Renderer renderer;
     PuzzleMode puzzleMode;
 
@@ -19,8 +21,6 @@ public class DeliveryPoint : MonoBehaviour
         puzzleMode = FindObjectOfType<PuzzleMode>();
 
         renderer.material.color = noObjectColour;
-
-
     }
 
     // when cube object is pushed into delivery point, it gives positive feedback to player and
@@ -29,7 +29,8 @@ public class DeliveryPoint : MonoBehaviour
     {
         renderer.material.color = hasObjectColour;
         objectDelivered = true;
-
+        confettiPS.Play();
+        AudioSource.PlayClipAtPoint(completedSoundEffect, transform.position);
         puzzleMode.CheckAllPointsCovered(); 
 
     }

@@ -12,7 +12,8 @@ public class RoverStateMachine : StateMachine
     public PuzzleState puzzleState;
     public MenuState menuState;
     public BoidsState boidsState;
-    public MinMaxState minMaxState;
+    public CoinState coinState;
+    public BaseState previousState;
 
     public Rigidbody rigidbody;
 
@@ -29,12 +30,10 @@ public class RoverStateMachine : StateMachine
     public float currentJumpPower;
     public float jumpMultilpier = 1.5f;
     public float jumpPowerupTime = 4f;
-    public Animator jumpAnimator;
+    public Animator roverAnimator;
 
     public bool isJumping = false;
     public bool startJumping = false;
-
-    public BaseState previousState;
 
     public ManagementSystem managementSystem;
     public PickupGenerator pickupGenerator;
@@ -47,7 +46,13 @@ public class RoverStateMachine : StateMachine
     public Material defaultMaterial;
     public GameObject roverBody;
 
-    //public Transform planetTransform;
+    [Header("Sound Effects")]
+    public AudioClip jumpSound;
+    public AudioClip driveSound;
+    public AudioClip explosionSound;
+
+    public ParticleSystem explosionPS;
+
 
     // initialises all the states the player can be in and finds certain variables that will be needed later
     private void Awake()
@@ -58,7 +63,7 @@ public class RoverStateMachine : StateMachine
         puzzleState = new DefaultPuzzleState(this);
         menuState = new MenuState(this);
         boidsState = new BoidsState(this);
-        minMaxState = new MinMaxState(this);
+        coinState = new CoinState(this);
        
 
         Time.timeScale = 1;
@@ -67,9 +72,8 @@ public class RoverStateMachine : StateMachine
         pickupGenerator = FindObjectOfType<PickupGenerator>();
         playerHealth = GetComponent<Health>();
         roverBody = GameObject.Find("RoverBody");
-        //planetTransform = FindObjectOfType<Planet>().gameObject.transform;
         defaultMaterial = roverBody.GetComponent<Renderer>().material;
-        jumpAnimator = GetComponent<Animator>();
+        roverAnimator = GetComponent<Animator>();
 
         currentMovementSpeed = DefaultMovementSpeed;
         currentJumpPower = DefaultJumpPower;
@@ -79,7 +83,6 @@ public class RoverStateMachine : StateMachine
     // depending on the planet the player is currently on, their initial staes will be set as seen below
     protected override BaseState GetFirstState()
     {
-        Planet currentPlanet = FindObjectOfType<Planet>();
 
         if (MainToolbox.planetType == Planet.PlanetType.survival)
         {
@@ -93,9 +96,9 @@ public class RoverStateMachine : StateMachine
         {
             return boidsState;
         }
-        else if (MainToolbox.planetType == Planet.PlanetType.minmax)
+        else if (MainToolbox.planetType == Planet.PlanetType.coin)
         {
-            return minMaxState;
+            return coinState;
         }
         else
         {

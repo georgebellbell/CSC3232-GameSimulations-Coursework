@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Boid Planet.unity
     guid: 85d446ddc01a1724b845487074d3a58c
+  - enabled: 1
+    path: Assets/Scenes/PathfindingPlanet.unity
+    guid: b9b9c9c3f6308394fa0f270b7fdd40da
   m_configObjects: {}

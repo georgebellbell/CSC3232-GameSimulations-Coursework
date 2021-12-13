@@ -569,6 +569,7 @@ GameObject:
   - component: {fileID: 833393550}
   - component: {fileID: 833393549}
   - component: {fileID: 833393547}
+  - component: {fileID: 833393548}
   m_Layer: 0
   m_Name: Rover
   m_TagString: Untagged
@@ -598,6 +599,7 @@ MonoBehaviour:
   currentJumpPower: 0
   jumpMultilpier: 1.5
   jumpPowerupTime: 4
+  roverAnimator: {fileID: 0}
   isJumping: 0
   startJumping: 0
   managementSystem: {fileID: 0}
@@ -607,6 +609,29 @@ MonoBehaviour:
   playerHealth: {fileID: 0}
   defaultMaterial: {fileID: 0}
   roverBody: {fileID: 0}
+  jumpSound: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
+  driveSound: {fileID: 0}
+  explosionSound: {fileID: 0}
+  explosionPS: {fileID: 0}
+--- !u!95 &833393548
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833393546}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3a2a0210c197b8146b82ca2491efe967, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &833393549
 MonoBehaviour:
   m_ObjectHideFlags: 0

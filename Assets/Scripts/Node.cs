@@ -21,7 +21,7 @@ public class Node : MonoBehaviour
         Impassable,
         Max
     }
-    NodeType nodeType = NodeType.Passable;
+    [SerializeField] NodeType nodeType = NodeType.Passable;
 
     public bool IsImpassable()
     {

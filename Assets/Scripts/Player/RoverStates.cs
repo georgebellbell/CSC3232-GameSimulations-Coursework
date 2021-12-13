@@ -49,7 +49,8 @@ public class RoverStates : BaseState
         {
             rover_sm.isJumping = true;
             rover_sm.startJumping = true;
-            rover_sm.jumpAnimator.SetTrigger("StartJumping");
+            rover_sm.roverAnimator.SetTrigger("StartJumping");
+            AudioSource.PlayClipAtPoint(rover_sm.jumpSound, rover_sm.transform.position);
         }
     }
 
@@ -65,11 +66,15 @@ public class RoverStates : BaseState
         // FINISH IMPLEMEMTING THIS
         if(rover_sm.movementDirection.x < 0)
         {
-            rover_sm.jumpAnimator.SetTrigger("MoveLeft");
+            rover_sm.roverAnimator.SetTrigger("MoveLeft");
         }
         else if (rover_sm.movementDirection.x > 0)
         {
-            rover_sm.jumpAnimator.SetTrigger("MoveRight");
+            rover_sm.roverAnimator.SetTrigger("MoveRight");
+        }
+        else
+        {
+            rover_sm.roverAnimator.SetTrigger("NotTurning");
         }
         
         
@@ -87,7 +92,7 @@ public class RoverStates : BaseState
 
         if (rover_sm.isJumping && dotProduct == 1f)
         {
-            rover_sm.jumpAnimator.SetTrigger("JumpHeightReached");
+            rover_sm.roverAnimator.SetTrigger("JumpHeightReached");
         }
 
 
@@ -106,7 +111,7 @@ public class RoverStates : BaseState
         if (collision.gameObject.CompareTag("Planet"))
         {
             rover_sm.isJumping = false;
-            rover_sm.jumpAnimator.SetTrigger("JumpHeightReached");
+            rover_sm.roverAnimator.SetTrigger("JumpHeightReached");
         }
     }
 
