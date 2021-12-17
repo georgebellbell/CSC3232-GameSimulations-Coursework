@@ -186,10 +186,6 @@ PrefabInstance:
       propertyPath: healthBarImage
       value: 
       objectReference: {fileID: 58314674}
-    - target: {fileID: 8558481161976610547, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
-      propertyPath: currentPlanet
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
 --- !u!1 &53612219

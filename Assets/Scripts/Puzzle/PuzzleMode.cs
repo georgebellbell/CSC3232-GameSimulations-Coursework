@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PuzzleMode : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class PuzzleMode : MonoBehaviour
 
     SphereCollider planetCollider;
     PhysicMaterial planetPhysicsMaterial;
+
+    public PostProcessVolume ppVolume;
+    public ColorGrading temperatureGradient;
 
     float excludeRange;
 
@@ -159,6 +163,8 @@ public class PuzzleMode : MonoBehaviour
 
         timeToChange = GetComponent<Timer>().GetGameTime();
 
+        ppVolume.profile.TryGetSettings(out temperatureGradient);
+
         // using time the level will be played, the rate at which friction and temp should be changed are calculated.
         changePerSecondTemp = (0 - currentPlanetTemperature) / timeToChange;
         changePerSecondFriction = (0 - currentPlanetFriction) / timeToChange;
@@ -171,8 +177,10 @@ public class PuzzleMode : MonoBehaviour
         currentPlanetFriction = Mathf.Clamp(currentPlanetFriction + changePerSecondFriction * Time.deltaTime, 0, 1);
         planetCollider.sharedMaterial.dynamicFriction = currentPlanetFriction;
         currentPlanetTemperature = Mathf.Clamp(currentPlanetTemperature + changePerSecondTemp * Time.deltaTime, 0, DefaultPlanetTemperature);
+        SetTemperatureEffect(currentPlanetTemperature - 40);
 
         float roundedTemp = Mathf.Round(currentPlanetTemperature * 10f) * 0.1f;
+        
         planetTemperatureText.text = roundedTemp.ToString();
 
         Color tempColour = Color.Lerp(coldColor, hotColor, (currentPlanetTemperature / DefaultPlanetTemperature));
@@ -181,6 +189,10 @@ public class PuzzleMode : MonoBehaviour
         GetComponentInChildren<Renderer>().material.color = tempColour;
     }
 
-   
+    // Creates a special effect by changing the overall colour of the scene, makes it look colder
+    void SetTemperatureEffect(float value)
+    {
+        temperatureGradient.temperature.value = value;
+    }
 
 }

@@ -52,6 +52,7 @@ public class SpeedPowerupState : PowerupState
     // during the enterstate function of powerup this is called and increases the player speed
     public override void ActivatePowerup()
     {
+        base.ActivatePowerup();
         rover_sm.currentMovementSpeed = rover_sm.DefaultMovementSpeed * rover_sm.speedMultilpier;
     }
 

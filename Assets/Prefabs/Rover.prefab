@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &980313961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980313963}
+  - component: {fileID: 980313962}
+  m_Layer: 13
+  m_Name: PostProcessing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &980313963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980313961}
+  m_LocalRotation: {x: -0.4693535, y: -0, z: -0, w: 0.8830104}
+  m_LocalPosition: {x: 21.117416, y: -358.23456, z: 0}
+  m_LocalScale: {x: 1.3535045, y: 4.3250594, z: 1.9700079}
+  m_Children: []
+  m_Father: {fileID: 4895690262085125488}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &980313962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980313961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 66fbecf3fc2d7bf4c80d02f20bba22ec, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &2420175263960275393
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +295,7 @@ GameObject:
   - component: {fileID: 4895690262085125488}
   - component: {fileID: 1084046108526019144}
   - component: {fileID: 8503001036435006993}
+  - component: {fileID: 3242391474348576404}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -262,9 +311,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3242391474323166501}
   m_LocalRotation: {x: 0.4693535, y: -0, z: -0, w: 0.8830104}
-  m_LocalPosition: {x: 0, y: 5.83, z: -2.43}
+  m_LocalPosition: {x: 0, y: 7, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 980313963}
   m_Father: {fileID: 717645976368492767}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 55.985, y: 0, z: 0}
@@ -319,6 +369,66 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3242391474323166501}
   m_Enabled: 1
+--- !u!114 &3242391474348576404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3242391474323166501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 4895690262085125488}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
 --- !u!1 &4687010748723577229
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +529,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthText: {fileID: 0}
   healthBarImage: {fileID: 0}
-  explosionSound: {fileID: 0}
 --- !u!114 &1449184047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,13 +556,14 @@ MonoBehaviour:
   startJumping: 0
   managementSystem: {fileID: 0}
   pickupGenerator: {fileID: 0}
+  ppVolume: {fileID: 980313962}
+  powerupEffect: {fileID: 0}
   movementDirection: {x: 0, y: 0, z: 0}
   healthIncrease: 20
   playerHealth: {fileID: 0}
   defaultMaterial: {fileID: 0}
   roverBody: {fileID: 0}
   jumpSound: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
-  driveSound: {fileID: 0}
   explosionSound: {fileID: 8300000, guid: 66972810b034c324c9e25a30e2812fdf, type: 3}
   explosionPS: {fileID: 198000012992274165}
 --- !u!95 &6136541960359691207

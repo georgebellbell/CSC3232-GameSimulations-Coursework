@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class RoverStateMachine : StateMachine
 {
@@ -38,6 +37,9 @@ public class RoverStateMachine : StateMachine
     public ManagementSystem managementSystem;
     public PickupGenerator pickupGenerator;
 
+    public PostProcessVolume ppVolume;
+    public ChromaticAberration powerupEffect;
+
     public Vector3 movementDirection;
 
     public int healthIncrease = 20;
@@ -48,7 +50,6 @@ public class RoverStateMachine : StateMachine
 
     [Header("Sound Effects")]
     public AudioClip jumpSound;
-    public AudioClip driveSound;
     public AudioClip explosionSound;
 
     public ParticleSystem explosionPS;
@@ -70,6 +71,7 @@ public class RoverStateMachine : StateMachine
         rigidbody = GetComponent<Rigidbody>();
         managementSystem = FindObjectOfType<ManagementSystem>();
         pickupGenerator = FindObjectOfType<PickupGenerator>();
+        ppVolume.profile.TryGetSettings(out powerupEffect);
         playerHealth = GetComponent<Health>();
         roverBody = GameObject.Find("RoverBody");
         defaultMaterial = roverBody.GetComponent<Renderer>().material;

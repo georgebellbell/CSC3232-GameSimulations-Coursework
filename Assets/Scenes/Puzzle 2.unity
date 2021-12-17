@@ -805,6 +805,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2435398706633351543, guid: 93c963b9887e0794d881e8f022954003, type: 3}
+      propertyPath: ppVolume
+      value: 
+      objectReference: {fileID: 1349484206}
+    - target: {fileID: 2435398706633351543, guid: 93c963b9887e0794d881e8f022954003, type: 3}
       propertyPath: deliveryPoint
       value: 
       objectReference: {fileID: 1946100786828730885, guid: b20742cd1297fc149aecec6b546c88db, type: 3}
@@ -1182,6 +1186,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
+--- !u!114 &1349484206 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 980313962, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
+  m_PrefabInstance: {fileID: 1349484205}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1932284063 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1932284063, guid: f247b816c254de743acf1fcfd2278677, type: 3}

@@ -23,6 +23,7 @@ public class JumpPowerupState : PowerupState
     // one of the functions called during on enter for the Powerupstate, increases the players jump power
     public override void ActivatePowerup()
     {
+        base.ActivatePowerup();
         rover_sm.currentJumpPower = rover_sm.DefaultJumpPower * rover_sm.jumpMultilpier;
     }
 

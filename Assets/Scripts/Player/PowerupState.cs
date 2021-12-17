@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 // Inherits from parent state and has two child states: jump and speed
 public class PowerupState : SurvivalState
@@ -25,7 +26,13 @@ public class PowerupState : SurvivalState
     // virtual method that is overridden by the jump and speed states with the action that will be performed
     public virtual void ActivatePowerup()
     {
+        SetPowerupEffect(1);
+    }
 
+    // Change the post processing effect currently being displayed
+    void SetPowerupEffect(float value)
+    {
+        rover_sm.powerupEffect.intensity.value = value;
     }
 
     // overriden by child states with the time that powerup will be available for
@@ -55,6 +62,7 @@ public class PowerupState : SurvivalState
     public override void ExitState()
     {
         base.ExitState();
+        SetPowerupEffect(0);
         rover_sm.roverBody.GetComponent<Renderer>().material = rover_sm.defaultMaterial;
     }
 
