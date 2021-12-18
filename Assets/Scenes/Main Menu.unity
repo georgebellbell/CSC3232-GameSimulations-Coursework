@@ -237,9 +237,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3242391474323166501, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4687010748723577229, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
       propertyPath: m_Name
       value: Rover
+      objectReference: {fileID: 0}
+    - target: {fileID: 5761118130746912257, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f77781d15b0d73d4c87c1e656acbbf21, type: 3}
